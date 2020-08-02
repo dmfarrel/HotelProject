@@ -1,0 +1,13 @@
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\bin\Debug\HotelManagementProject.exe.config
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\bin\Debug\HotelManagementProject.exe
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\bin\Debug\HotelManagementProject.pdb
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.Properties.Resources.resources
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.csproj.GenerateResource.cache
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.csproj.CoreCompileInputs.cache
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.exe
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.pdb
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.LoginInterface.resources
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.TransactionInterface.resources
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.CustomerInterface.resources
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.ExceptionInterface.resources
+C:\Users\djl12\OneDrive\Documents\Visual Studio 2017\Projects\HotelManagementProject\HotelManagementProject\obj\Debug\HotelManagementProject.EmployeeInterface.resources
