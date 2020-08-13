@@ -16,5 +16,20 @@ namespace HotelManagementProject
         {
             InitializeComponent();
         }
+
+        private void ExceptionInterface_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        public void setExceptionText(string text)
+        {
+            this.exceptionTextBox.Text = text;
+        }
+
+        private void okayButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

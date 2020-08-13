@@ -8,5 +8,9 @@ namespace HotelManagementProject
 {
     class Customer
     {
+        public Customer()
+        {
+
+        }
     }
 }

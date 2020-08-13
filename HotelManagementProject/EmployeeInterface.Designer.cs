@@ -52,7 +52,13 @@
             this.generateReportButton = new System.Windows.Forms.Button();
             this.summaryReportTextBox = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.modifyButton = new System.Windows.Forms.Button();
+            this.cutomerFoundLabel = new System.Windows.Forms.Label();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.customerListBox = new System.Windows.Forms.ListBox();
             this.roomReservationCalendar = new System.Windows.Forms.MonthCalendar();
+            this.customerNameLabel = new System.Windows.Forms.Label();
+            this.cutomerNameTextBox = new System.Windows.Forms.TextBox();
             this.hotelListBox = new System.Windows.Forms.ListBox();
             this.hotelLabel = new System.Windows.Forms.Label();
             this.roomLabel = new System.Windows.Forms.Label();
@@ -61,12 +67,6 @@
             this.cancelReservationButton = new System.Windows.Forms.Button();
             this.activeReservationsLabel = new System.Windows.Forms.Label();
             this.reservationListBox = new System.Windows.Forms.ListBox();
-            this.searchButton = new System.Windows.Forms.Button();
-            this.customerNameLabel = new System.Windows.Forms.Label();
-            this.cutomerNameTextBox = new System.Windows.Forms.TextBox();
-            this.cutomerFoundLabel = new System.Windows.Forms.Label();
-            this.customerListBox = new System.Windows.Forms.ListBox();
-            this.modifyButton = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -279,6 +279,7 @@
             this.generateReportButton.TabIndex = 1;
             this.generateReportButton.Text = "Generate Report";
             this.generateReportButton.UseVisualStyleBackColor = true;
+            this.generateReportButton.Click += new System.EventHandler(this.generateReportButton_Click);
             // 
             // summaryReportTextBox
             // 
@@ -315,11 +316,62 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Reservations";
             // 
+            // modifyButton
+            // 
+            this.modifyButton.Location = new System.Drawing.Point(6, 655);
+            this.modifyButton.Name = "modifyButton";
+            this.modifyButton.Size = new System.Drawing.Size(254, 23);
+            this.modifyButton.TabIndex = 19;
+            this.modifyButton.Text = "Modify Selected Reservation";
+            this.modifyButton.UseVisualStyleBackColor = true;
+            // 
+            // cutomerFoundLabel
+            // 
+            this.cutomerFoundLabel.AutoSize = true;
+            this.cutomerFoundLabel.Location = new System.Drawing.Point(3, 58);
+            this.cutomerFoundLabel.Name = "cutomerFoundLabel";
+            this.cutomerFoundLabel.Size = new System.Drawing.Size(89, 13);
+            this.cutomerFoundLabel.TabIndex = 17;
+            this.cutomerFoundLabel.Text = "Customers Found";
+            // 
+            // searchButton
+            // 
+            this.searchButton.Location = new System.Drawing.Point(185, 30);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(75, 23);
+            this.searchButton.TabIndex = 18;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            // 
+            // customerListBox
+            // 
+            this.customerListBox.FormattingEnabled = true;
+            this.customerListBox.Location = new System.Drawing.Point(6, 74);
+            this.customerListBox.Name = "customerListBox";
+            this.customerListBox.Size = new System.Drawing.Size(254, 43);
+            this.customerListBox.TabIndex = 16;
+            // 
             // roomReservationCalendar
             // 
             this.roomReservationCalendar.Location = new System.Drawing.Point(21, 452);
             this.roomReservationCalendar.Name = "roomReservationCalendar";
             this.roomReservationCalendar.TabIndex = 7;
+            // 
+            // customerNameLabel
+            // 
+            this.customerNameLabel.AutoSize = true;
+            this.customerNameLabel.Location = new System.Drawing.Point(6, 16);
+            this.customerNameLabel.Name = "customerNameLabel";
+            this.customerNameLabel.Size = new System.Drawing.Size(105, 13);
+            this.customerNameLabel.TabIndex = 17;
+            this.customerNameLabel.Text = "Customer Last Name";
+            // 
+            // cutomerNameTextBox
+            // 
+            this.cutomerNameTextBox.Location = new System.Drawing.Point(6, 32);
+            this.cutomerNameTextBox.Name = "cutomerNameTextBox";
+            this.cutomerNameTextBox.Size = new System.Drawing.Size(173, 20);
+            this.cutomerNameTextBox.TabIndex = 16;
             // 
             // hotelListBox
             // 
@@ -390,57 +442,6 @@
             this.reservationListBox.Name = "reservationListBox";
             this.reservationListBox.Size = new System.Drawing.Size(254, 95);
             this.reservationListBox.TabIndex = 3;
-            // 
-            // searchButton
-            // 
-            this.searchButton.Location = new System.Drawing.Point(185, 30);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(75, 23);
-            this.searchButton.TabIndex = 18;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = true;
-            // 
-            // customerNameLabel
-            // 
-            this.customerNameLabel.AutoSize = true;
-            this.customerNameLabel.Location = new System.Drawing.Point(6, 16);
-            this.customerNameLabel.Name = "customerNameLabel";
-            this.customerNameLabel.Size = new System.Drawing.Size(105, 13);
-            this.customerNameLabel.TabIndex = 17;
-            this.customerNameLabel.Text = "Customer Last Name";
-            // 
-            // cutomerNameTextBox
-            // 
-            this.cutomerNameTextBox.Location = new System.Drawing.Point(6, 32);
-            this.cutomerNameTextBox.Name = "cutomerNameTextBox";
-            this.cutomerNameTextBox.Size = new System.Drawing.Size(173, 20);
-            this.cutomerNameTextBox.TabIndex = 16;
-            // 
-            // cutomerFoundLabel
-            // 
-            this.cutomerFoundLabel.AutoSize = true;
-            this.cutomerFoundLabel.Location = new System.Drawing.Point(3, 58);
-            this.cutomerFoundLabel.Name = "cutomerFoundLabel";
-            this.cutomerFoundLabel.Size = new System.Drawing.Size(89, 13);
-            this.cutomerFoundLabel.TabIndex = 17;
-            this.cutomerFoundLabel.Text = "Customers Found";
-            // 
-            // customerListBox
-            // 
-            this.customerListBox.FormattingEnabled = true;
-            this.customerListBox.Location = new System.Drawing.Point(6, 74);
-            this.customerListBox.Name = "customerListBox";
-            this.customerListBox.Size = new System.Drawing.Size(254, 43);
-            this.customerListBox.TabIndex = 16;
-            // 
-            // modifyButton
-            // 
-            this.modifyButton.Location = new System.Drawing.Point(6, 655);
-            this.modifyButton.Name = "modifyButton";
-            this.modifyButton.Size = new System.Drawing.Size(254, 23);
-            this.modifyButton.TabIndex = 19;
-            this.modifyButton.Text = "Modify Selected Reservation";
-            this.modifyButton.UseVisualStyleBackColor = true;
             // 
             // EmployeeInterface
             // 

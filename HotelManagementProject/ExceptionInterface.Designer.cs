@@ -59,6 +59,7 @@
             this.okayButton.TabIndex = 3;
             this.okayButton.Text = "Okay";
             this.okayButton.UseVisualStyleBackColor = true;
+            this.okayButton.Click += new System.EventHandler(this.okayButton_Click);
             // 
             // ExceptionInterface
             // 
@@ -71,6 +72,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ExceptionInterface";
             this.Text = "Exception";
+            this.Load += new System.EventHandler(this.ExceptionInterface_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

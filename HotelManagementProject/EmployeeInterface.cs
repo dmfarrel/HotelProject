@@ -12,7 +12,8 @@ namespace HotelManagementProject
 {
     public partial class EmployeeInterface : Form
     {
-        TransactionInterface transactionInterface;
+        private TransactionInterface transactionInterface;  // Transaction Interface for use when ending the reservation use case
+        private HotelManagementSystem hms;                  // HMS class for use with all those other things
 
         public EmployeeInterface()
         {
@@ -21,14 +22,42 @@ namespace HotelManagementProject
 
         private void EmployeeInterface_Load(object sender, EventArgs e)
         {
-
+            hms = new HotelManagementSystem();          // Instantiate hms
         }
 
         private void newReservationButton_Click(object sender, EventArgs e)
         {
             transactionInterface = new TransactionInterface();
 
-            transactionInterface.Show();
+            transactionInterface.Show();    // Show a transaction interface
+        }
+
+        private void generateReportButton_Click(object sender, EventArgs e)
+        {
+            string startingDateString = this.reportBeginDateTextBox.Text;   // Get starting date string from UI
+            string endingDateString = this.reportEndDateTextBox.Text;       // Get ending date string from UI
+
+            DateTime startingDate, endingDate;  // DateTimes for comparison within the generator
+
+            if (!DateTime.TryParseExact(startingDateString, "MM-dd-yy", null, System.Globalization.DateTimeStyles.None, out startingDate))
+            {
+                // If the parse fails, throw an exception and exit
+                ExceptionInterface excep = new ExceptionInterface();   
+                excep.setExceptionText("Starting Date must be in MM-dd-yy format");
+                excep.Show();
+                return;
+            }
+
+            if (!DateTime.TryParseExact(endingDateString, "MM-dd-yy", null, System.Globalization.DateTimeStyles.None, out endingDate))
+            {
+                // If the parse fails, throw an exception and exit
+                ExceptionInterface excep = new ExceptionInterface();
+                excep.setExceptionText("Ending Date must be in MM-dd-yy format");
+                excep.Show();
+                return;
+            }
+
+            this.summaryReportTextBox.Text = this.hms.generateSummaryReport(startingDate, endingDate);  // Use the hms to generate report and assign it to UI
         }
     }
 }
