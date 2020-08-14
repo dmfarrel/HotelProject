@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             this.rewardGroupBox = new System.Windows.Forms.GroupBox();
-            this.paymentGroupBox = new System.Windows.Forms.GroupBox();
-            this.rewardPointsLabel = new System.Windows.Forms.Label();
             this.rewardListBox = new System.Windows.Forms.ListBox();
-            this.costLabel = new System.Windows.Forms.Label();
-            this.cardNumberLabel = new System.Windows.Forms.Label();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.codeLabel = new System.Windows.Forms.Label();
-            this.dateLabel = new System.Windows.Forms.Label();
-            this.cardNumberTextBox = new System.Windows.Forms.TextBox();
-            this.nameTextBox = new System.Windows.Forms.TextBox();
-            this.codeTextBox = new System.Windows.Forms.TextBox();
-            this.dateTextBox = new System.Windows.Forms.TextBox();
+            this.rewardPointsLabel = new System.Windows.Forms.Label();
+            this.paymentGroupBox = new System.Windows.Forms.GroupBox();
             this.submitButton = new System.Windows.Forms.Button();
+            this.dateTextBox = new System.Windows.Forms.TextBox();
+            this.codeTextBox = new System.Windows.Forms.TextBox();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.cardNumberTextBox = new System.Windows.Forms.TextBox();
+            this.dateLabel = new System.Windows.Forms.Label();
+            this.codeLabel = new System.Windows.Forms.Label();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.cardNumberLabel = new System.Windows.Forms.Label();
+            this.costLabel = new System.Windows.Forms.Label();
             this.rewardGroupBox.SuspendLayout();
             this.paymentGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -56,6 +56,23 @@
             this.rewardGroupBox.TabIndex = 0;
             this.rewardGroupBox.TabStop = false;
             this.rewardGroupBox.Text = "Reward";
+            // 
+            // rewardListBox
+            // 
+            this.rewardListBox.FormattingEnabled = true;
+            this.rewardListBox.Location = new System.Drawing.Point(6, 32);
+            this.rewardListBox.Name = "rewardListBox";
+            this.rewardListBox.Size = new System.Drawing.Size(212, 147);
+            this.rewardListBox.TabIndex = 2;
+            // 
+            // rewardPointsLabel
+            // 
+            this.rewardPointsLabel.AutoSize = true;
+            this.rewardPointsLabel.Location = new System.Drawing.Point(6, 16);
+            this.rewardPointsLabel.Name = "rewardPointsLabel";
+            this.rewardPointsLabel.Size = new System.Drawing.Size(94, 13);
+            this.rewardPointsLabel.TabIndex = 2;
+            this.rewardPointsLabel.Text = "Reward Points: <>";
             // 
             // paymentGroupBox
             // 
@@ -76,58 +93,43 @@
             this.paymentGroupBox.TabStop = false;
             this.paymentGroupBox.Text = "Payment";
             // 
-            // rewardPointsLabel
+            // submitButton
             // 
-            this.rewardPointsLabel.AutoSize = true;
-            this.rewardPointsLabel.Location = new System.Drawing.Point(6, 16);
-            this.rewardPointsLabel.Name = "rewardPointsLabel";
-            this.rewardPointsLabel.Size = new System.Drawing.Size(94, 13);
-            this.rewardPointsLabel.TabIndex = 2;
-            this.rewardPointsLabel.Text = "Reward Points: <>";
+            this.submitButton.Location = new System.Drawing.Point(7, 153);
+            this.submitButton.Name = "submitButton";
+            this.submitButton.Size = new System.Drawing.Size(195, 23);
+            this.submitButton.TabIndex = 8;
+            this.submitButton.Text = "Submit";
+            this.submitButton.UseVisualStyleBackColor = true;
+            this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             // 
-            // rewardListBox
+            // dateTextBox
             // 
-            this.rewardListBox.FormattingEnabled = true;
-            this.rewardListBox.Location = new System.Drawing.Point(6, 32);
-            this.rewardListBox.Name = "rewardListBox";
-            this.rewardListBox.Size = new System.Drawing.Size(212, 147);
-            this.rewardListBox.TabIndex = 2;
+            this.dateTextBox.Location = new System.Drawing.Point(94, 126);
+            this.dateTextBox.Name = "dateTextBox";
+            this.dateTextBox.Size = new System.Drawing.Size(108, 20);
+            this.dateTextBox.TabIndex = 7;
             // 
-            // costLabel
+            // codeTextBox
             // 
-            this.costLabel.AutoSize = true;
-            this.costLabel.Location = new System.Drawing.Point(6, 16);
-            this.costLabel.Name = "costLabel";
-            this.costLabel.Size = new System.Drawing.Size(46, 13);
-            this.costLabel.TabIndex = 0;
-            this.costLabel.Text = "Cost: <>";
+            this.codeTextBox.Location = new System.Drawing.Point(9, 126);
+            this.codeTextBox.Name = "codeTextBox";
+            this.codeTextBox.Size = new System.Drawing.Size(77, 20);
+            this.codeTextBox.TabIndex = 6;
             // 
-            // cardNumberLabel
+            // nameTextBox
             // 
-            this.cardNumberLabel.AutoSize = true;
-            this.cardNumberLabel.Location = new System.Drawing.Point(6, 32);
-            this.cardNumberLabel.Name = "cardNumberLabel";
-            this.cardNumberLabel.Size = new System.Drawing.Size(99, 13);
-            this.cardNumberLabel.TabIndex = 1;
-            this.cardNumberLabel.Text = "Credit Card Number";
+            this.nameTextBox.Location = new System.Drawing.Point(9, 87);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(193, 20);
+            this.nameTextBox.TabIndex = 5;
             // 
-            // nameLabel
+            // cardNumberTextBox
             // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(6, 71);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(89, 13);
-            this.nameLabel.TabIndex = 2;
-            this.nameLabel.Text = "Cardholder Name";
-            // 
-            // codeLabel
-            // 
-            this.codeLabel.AutoSize = true;
-            this.codeLabel.Location = new System.Drawing.Point(6, 110);
-            this.codeLabel.Name = "codeLabel";
-            this.codeLabel.Size = new System.Drawing.Size(28, 13);
-            this.codeLabel.TabIndex = 3;
-            this.codeLabel.Text = "CVC";
+            this.cardNumberTextBox.Location = new System.Drawing.Point(9, 48);
+            this.cardNumberTextBox.Name = "cardNumberTextBox";
+            this.cardNumberTextBox.Size = new System.Drawing.Size(193, 20);
+            this.cardNumberTextBox.TabIndex = 2;
             // 
             // dateLabel
             // 
@@ -138,43 +140,41 @@
             this.dateLabel.TabIndex = 4;
             this.dateLabel.Text = "Expiry Date";
             // 
-            // cardNumberTextBox
+            // codeLabel
             // 
-            this.cardNumberTextBox.Location = new System.Drawing.Point(9, 48);
-            this.cardNumberTextBox.Name = "cardNumberTextBox";
-            this.cardNumberTextBox.Size = new System.Drawing.Size(193, 20);
-            this.cardNumberTextBox.TabIndex = 2;
+            this.codeLabel.AutoSize = true;
+            this.codeLabel.Location = new System.Drawing.Point(6, 110);
+            this.codeLabel.Name = "codeLabel";
+            this.codeLabel.Size = new System.Drawing.Size(28, 13);
+            this.codeLabel.TabIndex = 3;
+            this.codeLabel.Text = "CVC";
             // 
-            // nameTextBox
+            // nameLabel
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(9, 87);
-            this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(193, 20);
-            this.nameTextBox.TabIndex = 5;
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Location = new System.Drawing.Point(6, 71);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(89, 13);
+            this.nameLabel.TabIndex = 2;
+            this.nameLabel.Text = "Cardholder Name";
             // 
-            // codeTextBox
+            // cardNumberLabel
             // 
-            this.codeTextBox.Location = new System.Drawing.Point(9, 126);
-            this.codeTextBox.Name = "codeTextBox";
-            this.codeTextBox.Size = new System.Drawing.Size(77, 20);
-            this.codeTextBox.TabIndex = 6;
+            this.cardNumberLabel.AutoSize = true;
+            this.cardNumberLabel.Location = new System.Drawing.Point(6, 32);
+            this.cardNumberLabel.Name = "cardNumberLabel";
+            this.cardNumberLabel.Size = new System.Drawing.Size(99, 13);
+            this.cardNumberLabel.TabIndex = 1;
+            this.cardNumberLabel.Text = "Credit Card Number";
             // 
-            // dateTextBox
+            // costLabel
             // 
-            this.dateTextBox.Location = new System.Drawing.Point(94, 126);
-            this.dateTextBox.Name = "dateTextBox";
-            this.dateTextBox.Size = new System.Drawing.Size(108, 20);
-            this.dateTextBox.TabIndex = 7;
-            // 
-            // submitButton
-            // 
-            this.submitButton.Location = new System.Drawing.Point(7, 153);
-            this.submitButton.Name = "submitButton";
-            this.submitButton.Size = new System.Drawing.Size(195, 23);
-            this.submitButton.TabIndex = 8;
-            this.submitButton.Text = "Submit";
-            this.submitButton.UseVisualStyleBackColor = true;
-            this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
+            this.costLabel.AutoSize = true;
+            this.costLabel.Location = new System.Drawing.Point(6, 16);
+            this.costLabel.Name = "costLabel";
+            this.costLabel.Size = new System.Drawing.Size(46, 13);
+            this.costLabel.TabIndex = 0;
+            this.costLabel.Text = "Cost: <>";
             // 
             // TransactionInterface
             // 
@@ -186,6 +186,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "TransactionInterface";
             this.Text = "Transaction";
+            this.Load += new System.EventHandler(this.TransactionInterface_Load);
             this.rewardGroupBox.ResumeLayout(false);
             this.rewardGroupBox.PerformLayout();
             this.paymentGroupBox.ResumeLayout(false);

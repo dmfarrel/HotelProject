@@ -25,5 +25,10 @@ namespace HotelManagementProject
 
             transactionInterface.Show();
         }
+
+        private void CustomerInterface_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

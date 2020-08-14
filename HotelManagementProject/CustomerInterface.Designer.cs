@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.roomReservationCalendar = new System.Windows.Forms.MonthCalendar();
+            this.hotelListBox = new System.Windows.Forms.ListBox();
+            this.hotelLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.roomListBox = new System.Windows.Forms.ListBox();
@@ -46,9 +49,6 @@
             this.lastLabel = new System.Windows.Forms.Label();
             this.firstLabel = new System.Windows.Forms.Label();
             this.usernameLabel = new System.Windows.Forms.Label();
-            this.roomReservationCalendar = new System.Windows.Forms.MonthCalendar();
-            this.hotelListBox = new System.Windows.Forms.ListBox();
-            this.hotelLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.userInformationGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -71,6 +71,29 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reservations";
+            // 
+            // roomReservationCalendar
+            // 
+            this.roomReservationCalendar.Location = new System.Drawing.Point(21, 375);
+            this.roomReservationCalendar.Name = "roomReservationCalendar";
+            this.roomReservationCalendar.TabIndex = 7;
+            // 
+            // hotelListBox
+            // 
+            this.hotelListBox.FormattingEnabled = true;
+            this.hotelListBox.Location = new System.Drawing.Point(6, 213);
+            this.hotelListBox.Name = "hotelListBox";
+            this.hotelListBox.Size = new System.Drawing.Size(254, 56);
+            this.hotelListBox.TabIndex = 15;
+            // 
+            // hotelLabel
+            // 
+            this.hotelLabel.AutoSize = true;
+            this.hotelLabel.Location = new System.Drawing.Point(6, 197);
+            this.hotelLabel.Name = "hotelLabel";
+            this.hotelLabel.Size = new System.Drawing.Size(32, 13);
+            this.hotelLabel.TabIndex = 15;
+            this.hotelLabel.Text = "Hotel";
             // 
             // label9
             // 
@@ -225,29 +248,6 @@
             this.usernameLabel.TabIndex = 1;
             this.usernameLabel.Text = "Username";
             // 
-            // roomReservationCalendar
-            // 
-            this.roomReservationCalendar.Location = new System.Drawing.Point(21, 375);
-            this.roomReservationCalendar.Name = "roomReservationCalendar";
-            this.roomReservationCalendar.TabIndex = 7;
-            // 
-            // hotelListBox
-            // 
-            this.hotelListBox.FormattingEnabled = true;
-            this.hotelListBox.Location = new System.Drawing.Point(6, 213);
-            this.hotelListBox.Name = "hotelListBox";
-            this.hotelListBox.Size = new System.Drawing.Size(254, 56);
-            this.hotelListBox.TabIndex = 15;
-            // 
-            // hotelLabel
-            // 
-            this.hotelLabel.AutoSize = true;
-            this.hotelLabel.Location = new System.Drawing.Point(6, 197);
-            this.hotelLabel.Name = "hotelLabel";
-            this.hotelLabel.Size = new System.Drawing.Size(32, 13);
-            this.hotelLabel.TabIndex = 15;
-            this.hotelLabel.Text = "Hotel";
-            // 
             // CustomerInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -258,6 +258,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "CustomerInterface";
             this.Text = "Customer Interface";
+            this.Load += new System.EventHandler(this.CustomerInterface_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.userInformationGroupBox.ResumeLayout(false);

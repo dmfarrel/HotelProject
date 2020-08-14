@@ -67,6 +67,8 @@
             this.cancelReservationButton = new System.Windows.Forms.Button();
             this.activeReservationsLabel = new System.Windows.Forms.Label();
             this.reservationListBox = new System.Windows.Forms.ListBox();
+            this.loadReservationFileButton = new System.Windows.Forms.Button();
+            this.loadReservationFileTextBox = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -234,7 +236,7 @@
             this.groupBox2.Controls.Add(this.summaryReportTextBox);
             this.groupBox2.Location = new System.Drawing.Point(284, 315);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(510, 386);
+            this.groupBox2.Size = new System.Drawing.Size(510, 407);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary Reports";
@@ -288,12 +290,14 @@
             this.summaryReportTextBox.Multiline = true;
             this.summaryReportTextBox.Name = "summaryReportTextBox";
             this.summaryReportTextBox.ReadOnly = true;
-            this.summaryReportTextBox.Size = new System.Drawing.Size(494, 328);
+            this.summaryReportTextBox.Size = new System.Drawing.Size(494, 355);
             this.summaryReportTextBox.TabIndex = 0;
             this.summaryReportTextBox.Text = "Summary Report Output";
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.loadReservationFileTextBox);
+            this.groupBox4.Controls.Add(this.loadReservationFileButton);
             this.groupBox4.Controls.Add(this.modifyButton);
             this.groupBox4.Controls.Add(this.cutomerFoundLabel);
             this.groupBox4.Controls.Add(this.searchButton);
@@ -311,7 +315,7 @@
             this.groupBox4.Controls.Add(this.reservationListBox);
             this.groupBox4.Location = new System.Drawing.Point(9, 8);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(269, 693);
+            this.groupBox4.Size = new System.Drawing.Size(269, 714);
             this.groupBox4.TabIndex = 7;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Reservations";
@@ -443,11 +447,27 @@
             this.reservationListBox.Size = new System.Drawing.Size(254, 95);
             this.reservationListBox.TabIndex = 3;
             // 
+            // loadReservationFileButton
+            // 
+            this.loadReservationFileButton.Location = new System.Drawing.Point(162, 682);
+            this.loadReservationFileButton.Name = "loadReservationFileButton";
+            this.loadReservationFileButton.Size = new System.Drawing.Size(98, 24);
+            this.loadReservationFileButton.TabIndex = 20;
+            this.loadReservationFileButton.Text = "Load File";
+            this.loadReservationFileButton.UseVisualStyleBackColor = true;
+            // 
+            // loadReservationFileTextBox
+            // 
+            this.loadReservationFileTextBox.Location = new System.Drawing.Point(6, 685);
+            this.loadReservationFileTextBox.Name = "loadReservationFileTextBox";
+            this.loadReservationFileTextBox.Size = new System.Drawing.Size(150, 20);
+            this.loadReservationFileTextBox.TabIndex = 21;
+            // 
             // EmployeeInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 713);
+            this.ClientSize = new System.Drawing.Size(804, 733);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -506,5 +526,7 @@
         private System.Windows.Forms.Button cancelReservationButton;
         private System.Windows.Forms.Label activeReservationsLabel;
         private System.Windows.Forms.ListBox reservationListBox;
+        private System.Windows.Forms.TextBox loadReservationFileTextBox;
+        private System.Windows.Forms.Button loadReservationFileButton;
     }
 }

@@ -21,5 +21,10 @@ namespace HotelManagementProject
         {
             this.Close();
         }
+
+        private void TransactionInterface_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

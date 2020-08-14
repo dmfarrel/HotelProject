@@ -10,6 +10,9 @@ namespace HotelManagementProject
     {
         private int reservationId;
 
+        private int customerId;
+        private int roomId;
+
         private DateTime startDate;
         private DateTime endDate;
         private DateTime madeDate;
@@ -21,9 +24,12 @@ namespace HotelManagementProject
         private bool cancelled;
         private bool upgraded;
 
-        public Reservation(int reservationId, DateTime startDate, DateTime endDate, DateTime madeDate, float cost, int rewardPointsEarned, int rewardPointsSpent, bool cancelled, bool upgraded)
+        public Reservation(int reservationId, int customerId, int roomId, DateTime startDate, DateTime endDate, DateTime madeDate, float cost, int rewardPointsEarned, int rewardPointsSpent, bool cancelled, bool upgraded)
         {
             this.reservationId = reservationId;
+
+            this.customerId = customerId;
+            this.roomId = roomId;
 
             this.startDate = startDate;
             this.endDate = endDate;
@@ -40,6 +46,16 @@ namespace HotelManagementProject
         public int getId()
         {
             return this.reservationId;
+        }
+
+        public int getCustomerId()
+        {
+            return this.customerId;
+        }
+
+        public int getRoomId()
+        {
+            return this.roomId;
         }
 
         public DateTime getStartDate()

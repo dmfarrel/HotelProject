@@ -231,6 +231,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "LoginInterface";
             this.Text = "Login";
+            this.Load += new System.EventHandler(this.LoginInterface_Load);
             this.accountGroupBox.ResumeLayout(false);
             this.accountGroupBox.PerformLayout();
             this.loginGroupBox.ResumeLayout(false);

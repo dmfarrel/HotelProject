@@ -30,5 +30,10 @@ namespace HotelManagementProject
 
             //this.Hide();
         }
+
+        private void LoginInterface_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
