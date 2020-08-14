@@ -19,9 +19,9 @@ namespace HotelManagementProject
         }
 
         // Method to get all reservations that exist within a date range
-        private Dictionary<int, Object[]> getReservationDataWithinRange(DateTime startingDate, DateTime endingDate, bool creationDate = false)
+        private Dictionary<int, Reservation> getReservationDataWithinRange(DateTime startingDate, DateTime endingDate, bool creationDate = false)
         {
-            Dictionary<int, Object[]> dataList = new Dictionary<int, Object[]>();     // Empty list to hold data to return
+            Dictionary<int, Reservation> dataList = new Dictionary<int, Reservation>();     // Empty list to hold data to return
 
             SqlDataReader rdr = null;   // For reading data
 
@@ -45,6 +45,9 @@ namespace HotelManagementProject
                     DateTime reservationEndDate = DateTime.ParseExact((string)rdr[6], "MM-dd-yy", null);
                     bool cancelled = (bool)rdr[7];
                     bool upgraded = (bool)rdr[8];
+                    float cost = (float)rdr[10];
+                    int rewardsPointsEarned = (int)rdr[11];
+                    int rewardsPointsSpent = (int)rdr[12];
                     DateTime dateOfReservation = DateTime.ParseExact((string)rdr[9], "MM-dd-yy", null);
 
                     // If creationDate is true, the range is based on when the reservation is created
@@ -54,9 +57,8 @@ namespace HotelManagementProject
                         // If the reservation exists within the range, add it to the list
                         if (DateTime.Compare(startingDate, dateOfReservation) >= 0 && DateTime.Compare(dateOfReservation, endingDate) <= 0)
                         {
-                            Object[] data = { reservationId, customerId, transactionId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, cancelled, upgraded };
-
-                            dataList.Add(reservationId, data);
+                            Reservation reservation = new Reservation(reservationId, reservationStartDate, reservationEndDate, dateOfReservation, cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded);
+                            dataList.Add(reservationId, reservation);
                         }
                     }
                     else
@@ -64,9 +66,8 @@ namespace HotelManagementProject
                         // If the reservation exists within the range, add it to the list
                         if (DateTime.Compare(startingDate, reservationStartDate) >= 0 && DateTime.Compare(reservationEndDate, endingDate) <= 0)
                         {
-                            Object[] data = { reservationId, customerId, transactionId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, cancelled, upgraded };
-
-                            dataList.Add(reservationId, data);
+                            Reservation reservation = new Reservation(reservationId, reservationStartDate, reservationEndDate, dateOfReservation, cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded);
+                            dataList.Add(reservationId, reservation);
                         }
                     }
                 }
@@ -89,9 +90,9 @@ namespace HotelManagementProject
         }
 
         // Returns a dictionary containing the data for every hotel in the database
-        public Dictionary<int, Object[]> getHotelData()
+        public Dictionary<int, Hotel> getHotelData()
         {
-            Dictionary<int, Object[]> dataList = new Dictionary<int, Object[]>();     // Empty list to hold data to return
+            Dictionary<int, Hotel> dataList = new Dictionary<int, Hotel>();     // Empty list to hold data to return
 
             SqlDataReader rdr = null;   // For reading data
 
@@ -111,9 +112,9 @@ namespace HotelManagementProject
                     string state = (string)rdr[3];
                     string name = (string)rdr[4];
 
-                    Object[] data = { hotelId, streetAddress, city, state, name };
+                    Hotel hotel = new Hotel(hotelId, streetAddress, city, state, name);
 
-                    dataList.Add(hotelId, data);
+                    dataList.Add(hotelId, hotel);
                 }
 
             }
@@ -178,16 +179,16 @@ namespace HotelManagementProject
             return dataList;    // Return the list of data
         }
 
-        public int countReservedRooms(Dictionary<int, Object[]> rooms)
+        public int countReservedRooms(Dictionary<int, Room> rooms)
         {
             int count = 0;
 
             foreach (var pair in rooms)
             {
                 int roomId = pair.Key;
-                Object[] data = pair.Value;
+                Room data = pair.Value;
 
-                if ((bool)data[3] == true) count++;
+                if (data.isReserved() == true) count++;
             }
 
             return count;
@@ -216,32 +217,32 @@ namespace HotelManagementProject
             return count;    // Return the list of data
         }
 
-        public int sumRewardsPointsAcrossReservations(Dictionary<int, Object[]> reservations, bool net = true)
+        public int sumRewardsPointsAcrossReservations(Dictionary<int, Reservation> reservations, bool net = true)
         {
             int sum = 0;    // Sum integer for accumulation pattern
 
             foreach (var pair in reservations)
             {
                 int reservationId = pair.Key;
-                Object[] reservationData = pair.Value;
+                Reservation reservationData = pair.Value;
 
-                if (net) sum += (int)reservationData[0] - (int)reservationData[1];  // If net, add the points earned minus the points spent
-                    else sum += (int)reservationData[0];    // If not net, only add the points earned
+                if (net) sum += reservationData.getRewardPointsEarned() - reservationData.getRewardPointsSpent();  // If net, add the points earned minus the points spent
+                    else sum += reservationData.getRewardPointsEarned();    // If not net, only add the points earned
             }
 
             return sum;
         }
 
-        public int sumRevenueAcrossReservations(Dictionary<int, Object[]> reservations)
+        public float sumRevenueAcrossReservations(Dictionary<int, Reservation> reservations)
         {
-            int sum = 0;
+            float sum = 0;
 
             foreach (var pair in reservations)
             {
                 int reservationId = pair.Key;
-                Object[] reservationData = pair.Value;
+                Reservation reservationData = pair.Value;
 
-                sum += (int)reservationData[2];
+                sum += reservationData.getCost();
             }
 
             return sum;
@@ -278,9 +279,9 @@ namespace HotelManagementProject
             string summaryReport = $"Summary Report from {startingDateString} to {endingDateString}\n\n";
 
             
-            Dictionary<int, Object[]> reservationCreatedData = this.getReservationDataWithinRange(startingDate, endingDate, false);     // Reservations based on when they were created
-            Dictionary<int, Object[]> reservationsNowToEndDate = this.getReservationDataWithinRange(endingDate, DateTime.Now, true);    // Reservations that happened between enddate and now
-            Dictionary<int, Object[]> reservationExistsData = this.getReservationDataWithinRange(startingDate, endingDate, true);       // Reservations that happened in range
+            Dictionary<int, Reservation> reservationCreatedData = this.getReservationDataWithinRange(startingDate, endingDate, false);     // Reservations based on when they were created
+            Dictionary<int, Reservation> reservationsNowToEndDate = this.getReservationDataWithinRange(endingDate, DateTime.Now, true);    // Reservations that happened between enddate and now
+            Dictionary<int, Reservation> reservationExistsData = this.getReservationDataWithinRange(startingDate, endingDate, true);       // Reservations that happened in range
 
             // Get Rewards Points stats
             int currentPoints = this.getOutstandingRewardsPoints();     // Get total points at current time
@@ -297,11 +298,11 @@ namespace HotelManagementProject
 
 
             // Compute per hotel occupancy stats
-            Dictionary<int, Object[]> hotels = this.getHotelData();
+            Dictionary<int, Hotel> hotels = this.getHotelData();
 
             int totalRooms = 0;
             int totalReserved = 0;
-            int totalRevenue = this.sumRevenueAcrossReservations(reservationExistsData);
+            float totalRevenue = this.sumRevenueAcrossReservations(reservationExistsData);
 
             summaryReport += $"Occupancies and Revenue between {startingDateString} and {endingDateString}\n";
 
@@ -309,9 +310,9 @@ namespace HotelManagementProject
             foreach(var pair in hotels)
             {
                 int key = pair.Key;
-                Object[] data = pair.Value;
+                Hotel data = pair.Value;
 
-                Dictionary<int, Object[]> rooms = this.getRoomsByHotelId(key);
+                Dictionary<int, Room> rooms = this.getRoomsByHotelId(key);
 
                 int roomsInHotel = rooms.Count;
                 int reservedRoomsInHotel = this.countReservedRooms(rooms);
@@ -322,7 +323,7 @@ namespace HotelManagementProject
 
                 float occupancyRate = (float)reservedRoomsInHotel / roomsInHotel;
 
-                summaryReport += $"Hotel {data[4]} Occupancy Rate - {occupancyRate}\n";
+                summaryReport += $"Hotel {data.getName()} Occupancy Rate - {occupancyRate}\n";
             }
 
             summaryReport += $"Chain Occupancy Rate - {(float)totalReserved / totalRooms} - ${totalRevenue}\n\n";

@@ -12,21 +12,29 @@ namespace HotelManagementProject
 
         private DateTime startDate;
         private DateTime endDate;
+        private DateTime madeDate;
 
         private int rewardPointsEarned;
         private int rewardPointsSpent;
         private float cost;
 
-        public Reservation(int reservationId, DateTime startDate, DateTime endDate, float cost, int rewardPointsEarned, int rewardPointsSpent)
+        private bool cancelled;
+        private bool upgraded;
+
+        public Reservation(int reservationId, DateTime startDate, DateTime endDate, DateTime madeDate, float cost, int rewardPointsEarned, int rewardPointsSpent, bool cancelled, bool upgraded)
         {
             this.reservationId = reservationId;
 
             this.startDate = startDate;
             this.endDate = endDate;
+            this.madeDate = madeDate;
 
             this.cost = cost;
             this.rewardPointsEarned = rewardPointsEarned;
             this.rewardPointsSpent = rewardPointsSpent;
+
+            this.cancelled = cancelled;
+            this.upgraded = upgraded;
         }
 
         public int getId()
@@ -44,6 +52,11 @@ namespace HotelManagementProject
             return this.endDate;
         }
 
+        public DateTime getMadeDate()
+        {
+            return this.madeDate;
+        }
+
         public float getCost()
         {
             return this.cost;
@@ -57,6 +70,16 @@ namespace HotelManagementProject
         public int getRewardPointsSpent()
         {
             return this.rewardPointsSpent;
+        }
+
+        public bool isCancelled()
+        {
+            return this.cancelled;
+        }
+
+        public bool isUpgraded()
+        {
+            return this.upgraded;
         }
     }
 }
