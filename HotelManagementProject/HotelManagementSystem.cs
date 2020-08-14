@@ -134,9 +134,9 @@ namespace HotelManagementProject
         }
 
         // Gets all rooms that have a specific hotelId
-        public Dictionary<int, Object[]> getRoomsByHotelId(int hotelId)
+        public Dictionary<int, Room> getRoomsByHotelId(int hotelId)
         {
-            Dictionary<int, Object[]> dataList = new Dictionary<int, Object[]>();     // Empty list to hold data to return
+            Dictionary<int, Room> dataList = new Dictionary<int, Room>();     // Empty list to hold data to return
 
             SqlDataReader rdr = null;   // For reading data
 
@@ -152,13 +152,13 @@ namespace HotelManagementProject
                 {
                     int roomId = (int)rdr[0];
                     string roomType = (string)rdr[1];
-                    string roomPrice = (string)rdr[2];
+                    float roomPrice = (float)rdr[2];
                     string amenities = (string)rdr[3];
                     bool reserved = (bool)rdr[4];
+                    
+                    Room room = new Room(roomId, hotelId, roomType, roomPrice, amenities, reserved);
 
-                    Object[] data = { roomId, roomType, roomPrice, amenities, reserved };
-
-                    dataList.Add(roomId, data);
+                    dataList.Add(roomId, room);
                 }
 
             }
@@ -329,6 +329,8 @@ namespace HotelManagementProject
 
 
             // Compute other statistics
+
+
 
             return summaryReport;
         }
