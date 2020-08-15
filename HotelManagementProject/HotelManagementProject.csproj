@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reservation.cs" />
     <Compile Include="RewardSystem.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="TransactionInterface.cs">

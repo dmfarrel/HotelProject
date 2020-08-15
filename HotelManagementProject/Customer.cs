@@ -14,14 +14,16 @@ namespace HotelManagementProject
         private string username;
         private string password;
         private DateTime DOB;
+        private int rewardPoints;
 
-        public Customer(int customerId, string name, string username, string password, DateTime dateOfBirth)
+        public Customer(int customerId, string name, string username, string password, DateTime dateOfBirth, int rewardPoints)
         {
             this.customerId = customerId;
             this.name = name;
             this.username = username;
             this.password = password;
             this.DOB = dateOfBirth;
+            this.rewardPoints = rewardPoints;
         }
 
         public int getId()
@@ -42,6 +44,11 @@ namespace HotelManagementProject
         public string getPassword()
         {
             return this.password;
+        }
+
+        public int getRewardPoints()
+        {
+            return this.rewardPoints;
         }
 
         public DateTime getDateOfBirth()
