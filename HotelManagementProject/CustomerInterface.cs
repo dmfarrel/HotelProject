@@ -12,7 +12,8 @@ namespace HotelManagementProject
 {
     public partial class CustomerInterface : Form
     {
-        TransactionInterface transactionInterface;
+        private TransactionInterface transactionInterface;
+        private Customer customer;
 
         public CustomerInterface()
         {

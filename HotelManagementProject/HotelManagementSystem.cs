@@ -18,6 +18,36 @@ namespace HotelManagementProject
             this.conn = new SqlConnection(this.connectionString);
         }
 
+        private bool insertReservation(int roomId, DateTime startDate, DateTime endDate, float cost, int waitlist)
+        {
+            // Method to add a reservation to the database
+            return true;
+        }
+
+        private bool setReservationCancel(int reservationId)
+        {
+            // Method to set the boolean value in the database for reservation to true
+            return true;
+        }
+
+        public int createNewReservation(int roomId, DateTime startDate, DateTime endDate)
+        {
+            // Get all other noncancelled reservations for this room
+            // Check if this timespan overlaps with any other non-cancelled reservations, while getting max of their waitlists
+            // Create reservation object
+            // Add to database
+
+            return 0;
+        }
+
+        public bool cancelReservation(int reservationId)
+        {
+            // Get room id for reservation
+            // Set value of row to cancelled, decrement waitlist of all other 
+
+            return true;
+        }
+
         // Method to get all reservations that exist within a date range
         public Dictionary<int, Reservation> getReservationDataWithinRange(DateTime startingDate, DateTime endingDate, bool creationDate = false)
         {
@@ -48,6 +78,7 @@ namespace HotelManagementProject
                     int rewardsPointsEarned = (int)rdr[11];
                     int rewardsPointsSpent = (int)rdr[12];
                     DateTime dateOfReservation = DateTime.ParseExact((string)rdr[9], "MM-dd-yy", null);
+                    int waitlist = (int)rdr[14];
 
                     // If creationDate is true, the range is based on when the reservation is created
                     // Otherwise, it's based on when the reservation exists
@@ -56,7 +87,7 @@ namespace HotelManagementProject
                         // If the reservation exists within the range, add it to the list
                         if (DateTime.Compare(startingDate, dateOfReservation) >= 0 && DateTime.Compare(dateOfReservation, endingDate) <= 0)
                         {
-                            Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded);
+                            Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
                             dataList.Add(reservationId, reservation);
                         }
                     }
@@ -65,7 +96,7 @@ namespace HotelManagementProject
                         // If the reservation exists within the range, add it to the list
                         if (DateTime.Compare(startingDate, reservationStartDate) >= 0 && DateTime.Compare(reservationEndDate, endingDate) <= 0)
                         {
-                            Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded);
+                            Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
                             dataList.Add(reservationId, reservation);
                         }
                     }
@@ -313,7 +344,7 @@ namespace HotelManagementProject
                 int reservationId = pair.Key;
                 Reservation reservationData = pair.Value;
 
-                sum += reservationData.getCost();
+                if (!reservationData.isCancelled() && !reservationData.isUpgraded() && reservationData.getWaitlist() == 0) sum += reservationData.getCost();
             }
 
             return sum;

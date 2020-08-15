@@ -20,11 +20,12 @@ namespace HotelManagementProject
         private int rewardPointsEarned;
         private int rewardPointsSpent;
         private float cost;
+        private int waitlist;
 
         private bool cancelled;
         private bool upgraded;
 
-        public Reservation(int reservationId, int customerId, int roomId, DateTime startDate, DateTime endDate, DateTime madeDate, float cost, int rewardPointsEarned, int rewardPointsSpent, bool cancelled, bool upgraded)
+        public Reservation(int reservationId, int customerId, int roomId, DateTime startDate, DateTime endDate, DateTime madeDate, float cost, int rewardPointsEarned, int rewardPointsSpent, bool cancelled, bool upgraded, int waitlist)
         {
             this.reservationId = reservationId;
 
@@ -41,6 +42,7 @@ namespace HotelManagementProject
 
             this.cancelled = cancelled;
             this.upgraded = upgraded;
+            this.waitlist = waitlist;
         }
 
         public int getId()
@@ -96,6 +98,11 @@ namespace HotelManagementProject
         public bool isUpgraded()
         {
             return this.upgraded;
+        }
+
+        public int getWaitlist()
+        {
+            return this.waitlist;
         }
     }
 }
