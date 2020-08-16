@@ -22,8 +22,8 @@ namespace HotelManagementProject
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            employeeInterface = new EmployeeInterface();
-            customerInterface = new CustomerInterface();
+            employeeInterface = new EmployeeInterface(new Employee(1, "Esmeralda", "who even knows", "password", DateTime.Now));
+            customerInterface = new CustomerInterface(new Customer(1, "Esmeralda", "who even knows", "password", DateTime.Now, 42));
 
             employeeInterface.Show();
             customerInterface.Show();

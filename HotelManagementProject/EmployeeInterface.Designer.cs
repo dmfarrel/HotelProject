@@ -56,11 +56,8 @@
             this.loadReservationFileButton = new System.Windows.Forms.Button();
             this.modifyButton = new System.Windows.Forms.Button();
             this.cutomerFoundLabel = new System.Windows.Forms.Label();
-            this.searchButton = new System.Windows.Forms.Button();
             this.customerListBox = new System.Windows.Forms.ListBox();
             this.roomReservationCalendar = new System.Windows.Forms.MonthCalendar();
-            this.customerNameLabel = new System.Windows.Forms.Label();
-            this.cutomerNameTextBox = new System.Windows.Forms.TextBox();
             this.hotelListBox = new System.Windows.Forms.ListBox();
             this.hotelLabel = new System.Windows.Forms.Label();
             this.roomLabel = new System.Windows.Forms.Label();
@@ -236,7 +233,7 @@
             this.groupBox2.Controls.Add(this.summaryReportTextBox);
             this.groupBox2.Location = new System.Drawing.Point(284, 315);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(510, 407);
+            this.groupBox2.Size = new System.Drawing.Size(510, 369);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary Reports";
@@ -290,7 +287,7 @@
             this.summaryReportTextBox.Multiline = true;
             this.summaryReportTextBox.Name = "summaryReportTextBox";
             this.summaryReportTextBox.ReadOnly = true;
-            this.summaryReportTextBox.Size = new System.Drawing.Size(494, 355);
+            this.summaryReportTextBox.Size = new System.Drawing.Size(494, 313);
             this.summaryReportTextBox.TabIndex = 0;
             this.summaryReportTextBox.Text = "Summary Report Output";
             // 
@@ -300,11 +297,8 @@
             this.groupBox4.Controls.Add(this.loadReservationFileButton);
             this.groupBox4.Controls.Add(this.modifyButton);
             this.groupBox4.Controls.Add(this.cutomerFoundLabel);
-            this.groupBox4.Controls.Add(this.searchButton);
             this.groupBox4.Controls.Add(this.customerListBox);
             this.groupBox4.Controls.Add(this.roomReservationCalendar);
-            this.groupBox4.Controls.Add(this.customerNameLabel);
-            this.groupBox4.Controls.Add(this.cutomerNameTextBox);
             this.groupBox4.Controls.Add(this.hotelListBox);
             this.groupBox4.Controls.Add(this.hotelLabel);
             this.groupBox4.Controls.Add(this.roomLabel);
@@ -315,21 +309,21 @@
             this.groupBox4.Controls.Add(this.reservationListBox);
             this.groupBox4.Location = new System.Drawing.Point(9, 8);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(269, 714);
+            this.groupBox4.Size = new System.Drawing.Size(269, 676);
             this.groupBox4.TabIndex = 7;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Reservations";
             // 
             // loadReservationFileTextBox
             // 
-            this.loadReservationFileTextBox.Location = new System.Drawing.Point(6, 685);
+            this.loadReservationFileTextBox.Location = new System.Drawing.Point(6, 642);
             this.loadReservationFileTextBox.Name = "loadReservationFileTextBox";
             this.loadReservationFileTextBox.Size = new System.Drawing.Size(150, 20);
             this.loadReservationFileTextBox.TabIndex = 21;
             // 
             // loadReservationFileButton
             // 
-            this.loadReservationFileButton.Location = new System.Drawing.Point(162, 682);
+            this.loadReservationFileButton.Location = new System.Drawing.Point(162, 639);
             this.loadReservationFileButton.Name = "loadReservationFileButton";
             this.loadReservationFileButton.Size = new System.Drawing.Size(98, 24);
             this.loadReservationFileButton.TabIndex = 20;
@@ -338,7 +332,7 @@
             // 
             // modifyButton
             // 
-            this.modifyButton.Location = new System.Drawing.Point(6, 655);
+            this.modifyButton.Location = new System.Drawing.Point(6, 613);
             this.modifyButton.Name = "modifyButton";
             this.modifyButton.Size = new System.Drawing.Size(254, 23);
             this.modifyButton.TabIndex = 19;
@@ -348,56 +342,31 @@
             // cutomerFoundLabel
             // 
             this.cutomerFoundLabel.AutoSize = true;
-            this.cutomerFoundLabel.Location = new System.Drawing.Point(3, 58);
+            this.cutomerFoundLabel.Location = new System.Drawing.Point(6, 20);
             this.cutomerFoundLabel.Name = "cutomerFoundLabel";
             this.cutomerFoundLabel.Size = new System.Drawing.Size(89, 13);
             this.cutomerFoundLabel.TabIndex = 17;
             this.cutomerFoundLabel.Text = "Customers Found";
             // 
-            // searchButton
-            // 
-            this.searchButton.Location = new System.Drawing.Point(185, 30);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(75, 23);
-            this.searchButton.TabIndex = 18;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = true;
-            // 
             // customerListBox
             // 
             this.customerListBox.FormattingEnabled = true;
-            this.customerListBox.Location = new System.Drawing.Point(6, 74);
+            this.customerListBox.Location = new System.Drawing.Point(6, 35);
             this.customerListBox.Name = "customerListBox";
-            this.customerListBox.Size = new System.Drawing.Size(254, 43);
+            this.customerListBox.Size = new System.Drawing.Size(254, 56);
             this.customerListBox.TabIndex = 16;
             this.customerListBox.SelectedIndexChanged += new System.EventHandler(this.customerListBox_SelectedIndexChanged);
             // 
             // roomReservationCalendar
             // 
-            this.roomReservationCalendar.Location = new System.Drawing.Point(21, 452);
+            this.roomReservationCalendar.Location = new System.Drawing.Point(21, 410);
             this.roomReservationCalendar.Name = "roomReservationCalendar";
             this.roomReservationCalendar.TabIndex = 7;
-            // 
-            // customerNameLabel
-            // 
-            this.customerNameLabel.AutoSize = true;
-            this.customerNameLabel.Location = new System.Drawing.Point(6, 16);
-            this.customerNameLabel.Name = "customerNameLabel";
-            this.customerNameLabel.Size = new System.Drawing.Size(105, 13);
-            this.customerNameLabel.TabIndex = 17;
-            this.customerNameLabel.Text = "Customer Last Name";
-            // 
-            // cutomerNameTextBox
-            // 
-            this.cutomerNameTextBox.Location = new System.Drawing.Point(6, 32);
-            this.cutomerNameTextBox.Name = "cutomerNameTextBox";
-            this.cutomerNameTextBox.Size = new System.Drawing.Size(173, 20);
-            this.cutomerNameTextBox.TabIndex = 16;
             // 
             // hotelListBox
             // 
             this.hotelListBox.FormattingEnabled = true;
-            this.hotelListBox.Location = new System.Drawing.Point(6, 290);
+            this.hotelListBox.Location = new System.Drawing.Point(6, 241);
             this.hotelListBox.Name = "hotelListBox";
             this.hotelListBox.Size = new System.Drawing.Size(254, 56);
             this.hotelListBox.TabIndex = 15;
@@ -406,7 +375,7 @@
             // hotelLabel
             // 
             this.hotelLabel.AutoSize = true;
-            this.hotelLabel.Location = new System.Drawing.Point(6, 274);
+            this.hotelLabel.Location = new System.Drawing.Point(6, 224);
             this.hotelLabel.Name = "hotelLabel";
             this.hotelLabel.Size = new System.Drawing.Size(32, 13);
             this.hotelLabel.TabIndex = 15;
@@ -415,7 +384,7 @@
             // roomLabel
             // 
             this.roomLabel.AutoSize = true;
-            this.roomLabel.Location = new System.Drawing.Point(6, 350);
+            this.roomLabel.Location = new System.Drawing.Point(3, 300);
             this.roomLabel.Name = "roomLabel";
             this.roomLabel.Size = new System.Drawing.Size(35, 13);
             this.roomLabel.TabIndex = 14;
@@ -424,7 +393,7 @@
             // roomListBox
             // 
             this.roomListBox.FormattingEnabled = true;
-            this.roomListBox.Location = new System.Drawing.Point(6, 365);
+            this.roomListBox.Location = new System.Drawing.Point(6, 316);
             this.roomListBox.Name = "roomListBox";
             this.roomListBox.Size = new System.Drawing.Size(254, 82);
             this.roomListBox.TabIndex = 13;
@@ -432,7 +401,7 @@
             // 
             // newReservationButton
             // 
-            this.newReservationButton.Location = new System.Drawing.Point(6, 626);
+            this.newReservationButton.Location = new System.Drawing.Point(6, 584);
             this.newReservationButton.Name = "newReservationButton";
             this.newReservationButton.Size = new System.Drawing.Size(254, 23);
             this.newReservationButton.TabIndex = 12;
@@ -442,17 +411,18 @@
             // 
             // cancelReservationButton
             // 
-            this.cancelReservationButton.Location = new System.Drawing.Point(6, 238);
+            this.cancelReservationButton.Location = new System.Drawing.Point(6, 198);
             this.cancelReservationButton.Name = "cancelReservationButton";
             this.cancelReservationButton.Size = new System.Drawing.Size(254, 23);
             this.cancelReservationButton.TabIndex = 8;
             this.cancelReservationButton.Text = "Cancel Selected Reservation";
             this.cancelReservationButton.UseVisualStyleBackColor = true;
+            this.cancelReservationButton.Click += new System.EventHandler(this.cancelReservationButton_Click);
             // 
             // activeReservationsLabel
             // 
             this.activeReservationsLabel.AutoSize = true;
-            this.activeReservationsLabel.Location = new System.Drawing.Point(6, 120);
+            this.activeReservationsLabel.Location = new System.Drawing.Point(6, 94);
             this.activeReservationsLabel.Name = "activeReservationsLabel";
             this.activeReservationsLabel.Size = new System.Drawing.Size(102, 13);
             this.activeReservationsLabel.TabIndex = 7;
@@ -461,16 +431,16 @@
             // reservationListBox
             // 
             this.reservationListBox.FormattingEnabled = true;
-            this.reservationListBox.Location = new System.Drawing.Point(6, 136);
+            this.reservationListBox.Location = new System.Drawing.Point(6, 110);
             this.reservationListBox.Name = "reservationListBox";
-            this.reservationListBox.Size = new System.Drawing.Size(254, 95);
+            this.reservationListBox.Size = new System.Drawing.Size(254, 82);
             this.reservationListBox.TabIndex = 3;
             // 
             // EmployeeInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 733);
+            this.ClientSize = new System.Drawing.Size(804, 691);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -516,11 +486,8 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button modifyButton;
         private System.Windows.Forms.Label cutomerFoundLabel;
-        private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.ListBox customerListBox;
         private System.Windows.Forms.MonthCalendar roomReservationCalendar;
-        private System.Windows.Forms.Label customerNameLabel;
-        private System.Windows.Forms.TextBox cutomerNameTextBox;
         private System.Windows.Forms.ListBox hotelListBox;
         private System.Windows.Forms.Label hotelLabel;
         private System.Windows.Forms.Label roomLabel;

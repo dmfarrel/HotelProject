@@ -12,31 +12,36 @@ namespace HotelManagementProject
 {
     public partial class EmployeeInterface : Form
     {
-        private TransactionInterface transactionInterface;  // Transaction Interface for use when ending the reservation use case
+        //private TransactionInterface transactionInterface;  // Transaction Interface for use when ending the reservation use case
         private HotelManagementSystem hms;                  // HMS class for use with all those other things
 
         private Dictionary<int, Customer> customers;
         private Dictionary<int, Hotel> hotels;
 
-        public EmployeeInterface()
+        private Employee employee;
+
+        public EmployeeInterface(Employee employee)
         {
             InitializeComponent();
+
+            this.employee = employee;
         }
 
+        // On load
         private void EmployeeInterface_Load(object sender, EventArgs e)
         {
             hms = new HotelManagementSystem();          // Instantiate hms
 
-            customers = hms.getCustomerData();
+            customers = hms.getCustomerData();  // Get a list of all customers
 
-            foreach (var pair in customers)
+            foreach (var pair in customers) // Add each to the listbox for customers
             {
                 customerListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getDateOfBirth()}");
             }
 
-            hotels = hms.getHotelData();
+            hotels = hms.getHotelData();    // Get a list of all hotels
 
-            foreach (var pair in hotels)
+            foreach (var pair in hotels)    // Add each to the listbox for hotels
             {
                 hotelListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getStreetAddress()}, {pair.Value.getCity()}, {pair.Value.getState()}");
             }
@@ -44,7 +49,58 @@ namespace HotelManagementProject
 
         private void newReservationButton_Click(object sender, EventArgs e)
         {
-            transactionInterface = new TransactionInterface();
+            // If there hasn't been a customer selected, throw an exception and exit
+            if (this.customerListBox.SelectedIndex == -1)
+            {
+                ExceptionInterface excep = new ExceptionInterface("Please select a customer and try again");
+                excep.Show();
+                return;
+            }
+
+            // If there hasn't been a room selected, throw an exception and exit
+            if (this.roomListBox.SelectedIndex == -1)
+            {
+                ExceptionInterface excep = new ExceptionInterface("Please select a room and try again");
+                excep.Show();
+                return;
+            }
+
+            // If there hasn't been a date range selected, throw an exception and exit
+            if (roomReservationCalendar.SelectionStart == null || roomReservationCalendar.SelectionEnd == null)
+            {
+                ExceptionInterface excep = new ExceptionInterface("Please select a date range and try again");
+                excep.Show();
+                return;
+            }
+
+            // Parse customer id from selected item
+            string customerItem = customerListBox.SelectedItem.ToString();
+            int customerId = Convert.ToInt32(customerItem.Substring(0, customerItem.IndexOf(' ')));
+
+            // Parse room id from selected item
+            string item = roomListBox.SelectedItem.ToString();
+            int roomId = Convert.ToInt32(item.Substring(0, item.IndexOf(' ')));
+
+            // Get start and end dates from calendar
+            DateTime startDate = roomReservationCalendar.SelectionStart;
+            DateTime endDate = roomReservationCalendar.SelectionEnd;
+
+            Dictionary<int, Reservation> reservations = this.hms.getReservationsByRoom(roomId); // Fetch all existing reservations for the room
+
+            // Check selected range against all reservations. If there's an overlap, throw an exception and exit
+            foreach (var pair in reservations)
+            {
+                if (!(DateTime.Compare(endDate, pair.Value.getStartDate()) <= 0 || DateTime.Compare(startDate, pair.Value.getEndDate()) >= 0))
+                {
+                    // If the dates overlap, throw an exception and exit
+                    ExceptionInterface excep = new ExceptionInterface("Selected reservation overlaps with another. Please try again");
+                    excep.Show();
+                    return;
+                }
+            }
+
+            // Spawn the transaction interface and give it everything it needs to continue the use case
+            TransactionInterface transactionInterface = new TransactionInterface(this.hms.getCustomerData()[customerId], this.hms.getRoomData()[roomId], startDate, endDate);
 
             transactionInterface.Show();    // Show a transaction interface
         }
@@ -59,8 +115,7 @@ namespace HotelManagementProject
             if (!DateTime.TryParseExact(startingDateString, "MM-dd-yy", null, System.Globalization.DateTimeStyles.None, out startingDate))
             {
                 // If the parse fails, throw an exception and exit
-                ExceptionInterface excep = new ExceptionInterface();   
-                excep.setExceptionText("Starting Date must be in MM-dd-yy format");
+                ExceptionInterface excep = new ExceptionInterface("Starting date must be in MM-dd-yy format");   
                 excep.Show();
                 return;
             }
@@ -68,8 +123,7 @@ namespace HotelManagementProject
             if (!DateTime.TryParseExact(endingDateString, "MM-dd-yy", null, System.Globalization.DateTimeStyles.None, out endingDate))
             {
                 // If the parse fails, throw an exception and exit
-                ExceptionInterface excep = new ExceptionInterface();
-                excep.setExceptionText("Ending Date must be in MM-dd-yy format");
+                ExceptionInterface excep = new ExceptionInterface("Ending date must be in MM-dd-yy format");
                 excep.Show();
                 return;
             }
@@ -93,21 +147,60 @@ namespace HotelManagementProject
 
         private void hotelListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int hotelId = hotelListBox.SelectedIndex + 1;
+            int hotelId = hotelListBox.SelectedIndex + 1;   // Grad selected hotel
 
-            Dictionary<int, Room> rooms = this.hms.getRoomsByHotelId(hotelId);
+            Dictionary<int, Room> rooms = this.hms.getRoomsByHotelId(hotelId);  // Get all the rooms from that hotel
 
-            roomListBox.Items.Clear();
+            roomListBox.Items.Clear();  // Clear the current list of items
 
+            // Loop through each room and add it to the listbox
             foreach (var pair in rooms)
             {
                 roomListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getType()} - {pair.Value.getPrice()}");
             }
         }
 
+        // Select a new room, update the calendar with active reservations
         private void roomListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Parse room id from list item
+            string item = roomListBox.SelectedItem.ToString();
+            int roomId = Convert.ToInt32(item.Substring(0, item.IndexOf(' ')));
 
+            Dictionary<int, Reservation> reservations = this.hms.getReservationsByRoom(roomId); // Get all reservations
+
+            roomReservationCalendar.RemoveAllBoldedDates(); // Clear current bolded dates
+
+            // Loop through each reservation and bold the active dates
+            foreach (var pair in reservations)
+            {
+                DateTime startDate = pair.Value.getStartDate();
+                DateTime endDate = pair.Value.getEndDate();
+
+                for (DateTime i = startDate; i < endDate; i = i.AddDays(1)) roomReservationCalendar.AddBoldedDate(i);
+            }
+
+            roomReservationCalendar.UpdateBoldedDates();    // Repaint the calendar
+        }
+
+        // Click button for cancel reservation
+        private void cancelReservationButton_Click(object sender, EventArgs e)
+        {
+            // If a reservation hasn't been selected, throw an exception and exit
+            if (this.reservationListBox.SelectedIndex == -1)
+            {
+                ExceptionInterface excep = new ExceptionInterface("Please select a reservation and try again");
+                excep.Show();
+                return;
+            }
+
+            // Parse the reservation id from the list item
+            string item = reservationListBox.SelectedItem.ToString();
+            int reservationId = Convert.ToInt32(item.Substring(0, item.IndexOf(' ')));
+
+            // Set to cancelled in the database and remove it from the list
+            this.hms.cancelReservation(reservationId);
+            this.reservationListBox.Items.RemoveAt(this.reservationListBox.SelectedIndex);
         }
     }
 }

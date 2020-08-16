@@ -32,7 +32,7 @@
             this.roomReservationCalendar = new System.Windows.Forms.MonthCalendar();
             this.hotelListBox = new System.Windows.Forms.ListBox();
             this.hotelLabel = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.rewardPointsLabel = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.roomListBox = new System.Windows.Forms.ListBox();
             this.newReservationButton = new System.Windows.Forms.Button();
@@ -42,11 +42,9 @@
             this.userInformationGroupBox = new System.Windows.Forms.GroupBox();
             this.updateInformationButton = new System.Windows.Forms.Button();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
-            this.lastTextBox = new System.Windows.Forms.TextBox();
             this.firstTextBox = new System.Windows.Forms.TextBox();
             this.usernameTextBox = new System.Windows.Forms.TextBox();
             this.passwordLabel = new System.Windows.Forms.Label();
-            this.lastLabel = new System.Windows.Forms.Label();
             this.firstLabel = new System.Windows.Forms.Label();
             this.usernameLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -58,7 +56,7 @@
             this.groupBox1.Controls.Add(this.roomReservationCalendar);
             this.groupBox1.Controls.Add(this.hotelListBox);
             this.groupBox1.Controls.Add(this.hotelLabel);
-            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.rewardPointsLabel);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.roomListBox);
             this.groupBox1.Controls.Add(this.newReservationButton);
@@ -85,6 +83,7 @@
             this.hotelListBox.Name = "hotelListBox";
             this.hotelListBox.Size = new System.Drawing.Size(254, 56);
             this.hotelListBox.TabIndex = 15;
+            this.hotelListBox.SelectedIndexChanged += new System.EventHandler(this.hotelListBox_SelectedIndexChanged);
             // 
             // hotelLabel
             // 
@@ -95,14 +94,14 @@
             this.hotelLabel.TabIndex = 15;
             this.hotelLabel.Text = "Hotel";
             // 
-            // label9
+            // rewardPointsLabel
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(126, 13);
-            this.label9.TabIndex = 5;
-            this.label9.Text = "Rewards Points: <count>";
+            this.rewardPointsLabel.AutoSize = true;
+            this.rewardPointsLabel.Location = new System.Drawing.Point(6, 16);
+            this.rewardPointsLabel.Name = "rewardPointsLabel";
+            this.rewardPointsLabel.Size = new System.Drawing.Size(126, 13);
+            this.rewardPointsLabel.TabIndex = 5;
+            this.rewardPointsLabel.Text = "Rewards Points: <count>";
             // 
             // label8
             // 
@@ -120,6 +119,7 @@
             this.roomListBox.Name = "roomListBox";
             this.roomListBox.Size = new System.Drawing.Size(254, 82);
             this.roomListBox.TabIndex = 13;
+            this.roomListBox.SelectedIndexChanged += new System.EventHandler(this.roomListBox_SelectedIndexChanged);
             // 
             // newReservationButton
             // 
@@ -139,6 +139,7 @@
             this.button3.TabIndex = 8;
             this.button3.Text = "Cancel Selected Reservation";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label5
             // 
@@ -161,42 +162,34 @@
             // 
             this.userInformationGroupBox.Controls.Add(this.updateInformationButton);
             this.userInformationGroupBox.Controls.Add(this.passwordTextBox);
-            this.userInformationGroupBox.Controls.Add(this.lastTextBox);
             this.userInformationGroupBox.Controls.Add(this.firstTextBox);
             this.userInformationGroupBox.Controls.Add(this.usernameTextBox);
             this.userInformationGroupBox.Controls.Add(this.passwordLabel);
-            this.userInformationGroupBox.Controls.Add(this.lastLabel);
             this.userInformationGroupBox.Controls.Add(this.firstLabel);
             this.userInformationGroupBox.Controls.Add(this.usernameLabel);
             this.userInformationGroupBox.Location = new System.Drawing.Point(287, 12);
             this.userInformationGroupBox.Name = "userInformationGroupBox";
-            this.userInformationGroupBox.Size = new System.Drawing.Size(184, 223);
+            this.userInformationGroupBox.Size = new System.Drawing.Size(184, 184);
             this.userInformationGroupBox.TabIndex = 5;
             this.userInformationGroupBox.TabStop = false;
             this.userInformationGroupBox.Text = "Update User Information";
             // 
             // updateInformationButton
             // 
-            this.updateInformationButton.Location = new System.Drawing.Point(9, 187);
+            this.updateInformationButton.Location = new System.Drawing.Point(9, 148);
             this.updateInformationButton.Name = "updateInformationButton";
             this.updateInformationButton.Size = new System.Drawing.Size(164, 23);
             this.updateInformationButton.TabIndex = 10;
             this.updateInformationButton.Text = "Update Information";
             this.updateInformationButton.UseVisualStyleBackColor = true;
+            this.updateInformationButton.Click += new System.EventHandler(this.updateInformationButton_Click);
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.Location = new System.Drawing.Point(9, 161);
+            this.passwordTextBox.Location = new System.Drawing.Point(9, 122);
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.Size = new System.Drawing.Size(164, 20);
             this.passwordTextBox.TabIndex = 9;
-            // 
-            // lastTextBox
-            // 
-            this.lastTextBox.Location = new System.Drawing.Point(9, 122);
-            this.lastTextBox.Name = "lastTextBox";
-            this.lastTextBox.Size = new System.Drawing.Size(164, 20);
-            this.lastTextBox.TabIndex = 7;
             // 
             // firstTextBox
             // 
@@ -215,29 +208,20 @@
             // passwordLabel
             // 
             this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(6, 145);
+            this.passwordLabel.Location = new System.Drawing.Point(6, 106);
             this.passwordLabel.Name = "passwordLabel";
             this.passwordLabel.Size = new System.Drawing.Size(53, 13);
             this.passwordLabel.TabIndex = 4;
             this.passwordLabel.Text = "Password";
-            // 
-            // lastLabel
-            // 
-            this.lastLabel.AutoSize = true;
-            this.lastLabel.Location = new System.Drawing.Point(6, 106);
-            this.lastLabel.Name = "lastLabel";
-            this.lastLabel.Size = new System.Drawing.Size(58, 13);
-            this.lastLabel.TabIndex = 3;
-            this.lastLabel.Text = "Last Name";
             // 
             // firstLabel
             // 
             this.firstLabel.AutoSize = true;
             this.firstLabel.Location = new System.Drawing.Point(6, 67);
             this.firstLabel.Name = "firstLabel";
-            this.firstLabel.Size = new System.Drawing.Size(57, 13);
+            this.firstLabel.Size = new System.Drawing.Size(35, 13);
             this.firstLabel.TabIndex = 2;
-            this.firstLabel.Text = "First Name";
+            this.firstLabel.Text = "Name";
             // 
             // usernameLabel
             // 
@@ -270,7 +254,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label rewardPointsLabel;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ListBox roomListBox;
         private System.Windows.Forms.Button newReservationButton;
@@ -280,11 +264,9 @@
         private System.Windows.Forms.GroupBox userInformationGroupBox;
         private System.Windows.Forms.Button updateInformationButton;
         private System.Windows.Forms.TextBox passwordTextBox;
-        private System.Windows.Forms.TextBox lastTextBox;
         private System.Windows.Forms.TextBox firstTextBox;
         private System.Windows.Forms.TextBox usernameTextBox;
         private System.Windows.Forms.Label passwordLabel;
-        private System.Windows.Forms.Label lastLabel;
         private System.Windows.Forms.Label firstLabel;
         private System.Windows.Forms.Label usernameLabel;
         private System.Windows.Forms.MonthCalendar roomReservationCalendar;

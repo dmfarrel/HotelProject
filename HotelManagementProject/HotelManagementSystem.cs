@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace HotelManagementProject
 {
-    class HotelManagementSystem
+    public class HotelManagementSystem
     {
         private SqlConnection conn;
         private string connectionString = "Data Source=hotelmanagement375.database.windows.net;Initial Catalog=HotelManagement;User ID=hoteladmin;Password=Letmein123";
@@ -18,15 +18,85 @@ namespace HotelManagementProject
             this.conn = new SqlConnection(this.connectionString);
         }
 
-        private bool insertReservation(int roomId, DateTime startDate, DateTime endDate, float cost, int waitlist)
+        // Inserts a reservation into the database
+        public bool insertReservation(Reservation reservation)
         {
-            // Method to add a reservation to the database
+            
+            try
+            {
+                conn.Open();
+
+                int roomId = reservation.getRoomId();
+                int customerId = reservation.getCustomerId();
+                string startDate = reservation.getStartDate().ToString("MM-dd-yy");
+                string endDate = reservation.getEndDate().ToString("MM-dd-yy");
+                float cost = reservation.getCost();
+                int rewardPointsEarned = reservation.getRewardPointsEarned();
+                int rewardPointsSpent = reservation.getRewardPointsSpent();
+                string dateOfReservation = reservation.getMadeDate().ToString("MM-dd-yy");
+
+                string insertString = $"INSERT INTO Reservation (RoomId,CustomerId,StartDate,EndDate,Cost,Waitlist,Cancelled,Upgraded,RewardPointsEarned,RewardPointsSpent,DateOfReservation) " +
+                                      $"VALUES ({roomId},{customerId},'{startDate}','{endDate}',{cost},0,0,0,{rewardPointsEarned},{rewardPointsSpent},'{dateOfReservation}')";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
             return true;
         }
 
+        // Method to set the boolean value in the database for reservation to true
         private bool setReservationCancel(int reservationId)
         {
-            // Method to set the boolean value in the database for reservation to true
+            try
+            {
+                conn.Open();
+
+                string updateString = $"UPDATE Reservation SET Cancelled=1 WHERE ReservationId={reservationId}";
+
+                SqlCommand cmd = new SqlCommand(updateString, conn);
+
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
+        public bool updateCustomerInformation(int customerId, string newName, string newUsername, string newPassword)
+        {
+            try
+            {
+                conn.Open();
+
+                string updateString = $"UPDATE Customer SET Name='{newName}', USername='{newUsername}', Password='{newPassword}' WHERE CustomerId={customerId}";
+
+                SqlCommand cmd = new SqlCommand(updateString, conn);
+
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
             return true;
         }
 
@@ -44,7 +114,7 @@ namespace HotelManagementProject
         {
             // Get room id for reservation
             // Set value of row to cancelled, decrement waitlist of all other 
-
+            setReservationCancel(reservationId);
             return true;
         }
 
@@ -199,8 +269,11 @@ namespace HotelManagementProject
                     DateTime dateOfReservation = DateTime.ParseExact((string)rdr[11], "MM-dd-yy", null);
                     int waitlist = (int)rdr[6];
 
-                    Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, (float)cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
-                    dataList.Add(reservationId, reservation);
+                    if (!cancelled)
+                    {
+                        Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, (float)cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
+                        dataList.Add(reservationId, reservation);
+                    }
                 }
 
             }
@@ -291,6 +364,98 @@ namespace HotelManagementProject
                     Customer customer = new Customer(customerId, name, username, password, dateOfBirth, rewardPoints); // Create hotel data object
 
                     dataList.Add(customerId, customer);   // Add hotel object to the dictionary
+                }
+
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();    // Close the data reader
+                }
+
+                if (this.conn != null)
+                {
+                    this.conn.Close();  // Close the connection
+                }
+            }
+
+            return dataList;    // Return the list of data
+        }
+
+        // Gets information on all employees
+        public Dictionary<int, Employee> getEmployeeData()
+        {
+            Dictionary<int, Employee> dataList = new Dictionary<int, Employee>();     // Empty list to hold data to return
+
+            SqlDataReader rdr = null;   // For reading data
+
+            try
+            {
+                this.conn.Open();   // Open the SQL connection
+
+                SqlCommand getCustomers = new SqlCommand("SELECT * FROM Employee", this.conn);    // Sql command to get all hotels
+
+                rdr = getCustomers.ExecuteReader();  // Execute command
+
+                while (rdr.Read())  // Loop through every entry in the table
+                {
+                    int employeeId = (int)rdr[0];
+                    string name = (string)rdr[1];
+                    string username = (string)rdr[2];
+                    string password = (string)rdr[3];
+                    DateTime dateOfBirth = DateTime.ParseExact((string)rdr[4], "MM-dd-yy", null);
+                    int rewardPoints = (int)rdr[5];
+
+                    Employee employee = new Employee(employeeId, name, username, password, dateOfBirth); // Create hotel data object
+
+                    dataList.Add(employeeId, employee);   // Add hotel object to the dictionary
+                }
+
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();    // Close the data reader
+                }
+
+                if (this.conn != null)
+                {
+                    this.conn.Close();  // Close the connection
+                }
+            }
+
+            return dataList;    // Return the list of data
+        }
+
+        // Gets information on all rooms
+        public Dictionary<int, Room> getRoomData()
+        {
+            Dictionary<int, Room> dataList = new Dictionary<int, Room>();     // Empty list to hold data to return
+
+            SqlDataReader rdr = null;   // For reading data
+
+            try
+            {
+                this.conn.Open();   // Open the SQL connection
+
+                SqlCommand getReservations = new SqlCommand($"SELECT * FROM Room", this.conn);    // Sql command to get all hotels
+
+                rdr = getReservations.ExecuteReader();  // Execute command
+
+                while (rdr.Read())  // Loop through every entry in the table
+                {
+                    int roomId = (int)rdr[0];
+                    int hotelId = (int)rdr[1];
+                    string roomType = (string)rdr[3];
+                    double roomPrice = (double)rdr[2];
+                    string amenities = (string)rdr[4];
+                    bool reserved = (int)rdr[5] != 0;
+
+                    Room room = new Room(roomId, hotelId, roomType, (float)roomPrice, amenities, reserved);
+
+                    dataList.Add(roomId, room);
                 }
 
             }

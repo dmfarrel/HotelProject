@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagementProject
 {
-    class Employee
+    public class Employee
     {
         private int employeeId;
 

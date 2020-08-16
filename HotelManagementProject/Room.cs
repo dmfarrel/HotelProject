@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagementProject
 {
-    class Room
+    public class Room
     {
         private string roomType;
         private float roomPrice;

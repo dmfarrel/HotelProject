@@ -12,14 +12,18 @@ namespace HotelManagementProject
 {
     public partial class ExceptionInterface : Form
     {
-        public ExceptionInterface()
+        private string text;
+
+        public ExceptionInterface(string text)
         {
             InitializeComponent();
+
+            this.text = text;
         }
 
         private void ExceptionInterface_Load(object sender, EventArgs e)
         {
-
+            this.exceptionTextBox.Text = text;
         }
 
         public void setExceptionText(string text)
