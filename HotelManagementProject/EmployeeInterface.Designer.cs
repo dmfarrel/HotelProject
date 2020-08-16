@@ -52,6 +52,8 @@
             this.generateReportButton = new System.Windows.Forms.Button();
             this.summaryReportTextBox = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.loadReservationFileTextBox = new System.Windows.Forms.TextBox();
+            this.loadReservationFileButton = new System.Windows.Forms.Button();
             this.modifyButton = new System.Windows.Forms.Button();
             this.cutomerFoundLabel = new System.Windows.Forms.Label();
             this.searchButton = new System.Windows.Forms.Button();
@@ -67,8 +69,6 @@
             this.cancelReservationButton = new System.Windows.Forms.Button();
             this.activeReservationsLabel = new System.Windows.Forms.Label();
             this.reservationListBox = new System.Windows.Forms.ListBox();
-            this.loadReservationFileButton = new System.Windows.Forms.Button();
-            this.loadReservationFileTextBox = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -320,6 +320,22 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Reservations";
             // 
+            // loadReservationFileTextBox
+            // 
+            this.loadReservationFileTextBox.Location = new System.Drawing.Point(6, 685);
+            this.loadReservationFileTextBox.Name = "loadReservationFileTextBox";
+            this.loadReservationFileTextBox.Size = new System.Drawing.Size(150, 20);
+            this.loadReservationFileTextBox.TabIndex = 21;
+            // 
+            // loadReservationFileButton
+            // 
+            this.loadReservationFileButton.Location = new System.Drawing.Point(162, 682);
+            this.loadReservationFileButton.Name = "loadReservationFileButton";
+            this.loadReservationFileButton.Size = new System.Drawing.Size(98, 24);
+            this.loadReservationFileButton.TabIndex = 20;
+            this.loadReservationFileButton.Text = "Load File";
+            this.loadReservationFileButton.UseVisualStyleBackColor = true;
+            // 
             // modifyButton
             // 
             this.modifyButton.Location = new System.Drawing.Point(6, 655);
@@ -354,6 +370,7 @@
             this.customerListBox.Name = "customerListBox";
             this.customerListBox.Size = new System.Drawing.Size(254, 43);
             this.customerListBox.TabIndex = 16;
+            this.customerListBox.SelectedIndexChanged += new System.EventHandler(this.customerListBox_SelectedIndexChanged);
             // 
             // roomReservationCalendar
             // 
@@ -446,22 +463,6 @@
             this.reservationListBox.Name = "reservationListBox";
             this.reservationListBox.Size = new System.Drawing.Size(254, 95);
             this.reservationListBox.TabIndex = 3;
-            // 
-            // loadReservationFileButton
-            // 
-            this.loadReservationFileButton.Location = new System.Drawing.Point(162, 682);
-            this.loadReservationFileButton.Name = "loadReservationFileButton";
-            this.loadReservationFileButton.Size = new System.Drawing.Size(98, 24);
-            this.loadReservationFileButton.TabIndex = 20;
-            this.loadReservationFileButton.Text = "Load File";
-            this.loadReservationFileButton.UseVisualStyleBackColor = true;
-            // 
-            // loadReservationFileTextBox
-            // 
-            this.loadReservationFileTextBox.Location = new System.Drawing.Point(6, 685);
-            this.loadReservationFileTextBox.Name = "loadReservationFileTextBox";
-            this.loadReservationFileTextBox.Size = new System.Drawing.Size(150, 20);
-            this.loadReservationFileTextBox.TabIndex = 21;
             // 
             // EmployeeInterface
             // 

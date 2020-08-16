@@ -15,6 +15,8 @@ namespace HotelManagementProject
         private TransactionInterface transactionInterface;  // Transaction Interface for use when ending the reservation use case
         private HotelManagementSystem hms;                  // HMS class for use with all those other things
 
+        private Dictionary<int, Customer> customers;
+
         public EmployeeInterface()
         {
             InitializeComponent();
@@ -23,6 +25,13 @@ namespace HotelManagementProject
         private void EmployeeInterface_Load(object sender, EventArgs e)
         {
             hms = new HotelManagementSystem();          // Instantiate hms
+
+            customers = hms.getCustomerData();
+
+            foreach (var pair in customers)
+            {
+                customerListBox.Items.Add(pair.Value.getName());
+            }
         }
 
         private void newReservationButton_Click(object sender, EventArgs e)
@@ -57,7 +66,12 @@ namespace HotelManagementProject
                 return;
             }
 
-            this.summaryReportTextBox.Text = this.hms.generateSummaryReport(startingDate, endingDate);  // Use the hms to generate report and assign it to UI
+            this.summaryReportTextBox.Text = this.hms.generateSummaryReport(startingDate, endingDate).Replace("\n", Environment.NewLine);  // Use the hms to generate report and assign it to UI
+        }
+
+        private void customerListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

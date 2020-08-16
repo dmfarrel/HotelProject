@@ -11,7 +11,7 @@ namespace HotelManagementProject
     class HotelManagementSystem
     {
         private SqlConnection conn;
-        private string connectionString = "";
+        private string connectionString = "Data Source=hotelmanagement375.database.windows.net;Initial Catalog=HotelManagement;User ID=hoteladmin;Password=Letmein123";
 
         public HotelManagementSystem()
         {
@@ -66,19 +66,18 @@ namespace HotelManagementProject
                 while (rdr.Read())  // Loop through every entry in the table
                 {
                     int reservationId = (int)rdr[0];
-                    int customerId = (int)rdr[1];
-                    int roomId = (int)rdr[3];
-
-                    string hotelName = (string)rdr[4];
-                    DateTime reservationStartDate = DateTime.ParseExact((string)rdr[5], "MM-dd-yy", null);
-                    DateTime reservationEndDate = DateTime.ParseExact((string)rdr[6], "MM-dd-yy", null);
-                    bool cancelled = (bool)rdr[7];
-                    bool upgraded = (bool)rdr[8];
-                    float cost = (float)rdr[10];
-                    int rewardsPointsEarned = (int)rdr[11];
-                    int rewardsPointsSpent = (int)rdr[12];
-                    DateTime dateOfReservation = DateTime.ParseExact((string)rdr[9], "MM-dd-yy", null);
-                    int waitlist = (int)rdr[14];
+                    int customerId = (int)rdr[2];
+                    int roomId = (int)rdr[1];
+                    
+                    DateTime reservationStartDate = DateTime.ParseExact((string)rdr[3], "MM-dd-yy", null);
+                    DateTime reservationEndDate = DateTime.ParseExact((string)rdr[4], "MM-dd-yy", null);
+                    bool cancelled = (int)rdr[7] != 0;
+                    bool upgraded = (int)rdr[8] != 0;
+                    double cost = (double)rdr[5];
+                    int rewardsPointsEarned = (int)rdr[9];
+                    int rewardsPointsSpent = (int)rdr[10];
+                    DateTime dateOfReservation = DateTime.ParseExact((string)rdr[11], "MM-dd-yy", null);
+                    int waitlist = (int)rdr[6];
 
                     // If creationDate is true, the range is based on when the reservation is created
                     // Otherwise, it's based on when the reservation exists
@@ -87,7 +86,7 @@ namespace HotelManagementProject
                         // If the reservation exists within the range, add it to the list
                         if (DateTime.Compare(startingDate, dateOfReservation) >= 0 && DateTime.Compare(dateOfReservation, endingDate) <= 0)
                         {
-                            Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
+                            Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, (float)cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
                             dataList.Add(reservationId, reservation);
                         }
                     }
@@ -96,7 +95,7 @@ namespace HotelManagementProject
                         // If the reservation exists within the range, add it to the list
                         if (DateTime.Compare(startingDate, reservationStartDate) >= 0 && DateTime.Compare(reservationEndDate, endingDate) <= 0)
                         {
-                            Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
+                            Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, (float)cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
                             dataList.Add(reservationId, reservation);
                         }
                     }
@@ -137,14 +136,59 @@ namespace HotelManagementProject
                 while (rdr.Read())  // Loop through every entry in the table
                 {
                     int hotelId = (int)rdr[0];
-                    string streetAddress = (string)rdr[1];
-                    string city = (string)rdr[2];
-                    string state = (string)rdr[3];
-                    string name = (string)rdr[4];
+                    string name = (string)rdr[1];
+                    string streetAddress = (string)rdr[2];
+                    string city = (string)rdr[3];
+                    string state = (string)rdr[4];
 
                     Hotel hotel = new Hotel(hotelId, streetAddress, city, state, name); // Create hotel data object
 
                     dataList.Add(hotelId, hotel);   // Add hotel object to the dictionary
+                }
+
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();    // Close the data reader
+                }
+
+                if (this.conn != null)
+                {
+                    this.conn.Close();  // Close the connection
+                }
+            }
+
+            return dataList;    // Return the list of data
+        }
+
+        public Dictionary<int, Customer> getCustomerData()
+        {
+            Dictionary<int, Customer> dataList = new Dictionary<int, Customer>();     // Empty list to hold data to return
+
+            SqlDataReader rdr = null;   // For reading data
+
+            try
+            {
+                this.conn.Open();   // Open the SQL connection
+
+                SqlCommand getCustomers = new SqlCommand("SELECT * FROM Customer", this.conn);    // Sql command to get all hotels
+
+                rdr = getCustomers.ExecuteReader();  // Execute command
+
+                while (rdr.Read())  // Loop through every entry in the table
+                {
+                    int customerId = (int)rdr[0];
+                    string name = (string)rdr[1];
+                    string username = (string)rdr[2];
+                    string password = (string)rdr[3];
+                    DateTime dateOfBirth = DateTime.ParseExact((string)rdr[4], "MM-dd-yy", null);
+                    int rewardPoints = (int)rdr[5];
+
+                    Customer customer = new Customer(customerId, name, username, password, dateOfBirth, rewardPoints); // Create hotel data object
+
+                    dataList.Add(customerId, customer);   // Add hotel object to the dictionary
                 }
 
             }
@@ -175,19 +219,19 @@ namespace HotelManagementProject
             {
                 this.conn.Open();   // Open the SQL connection
 
-                SqlCommand getReservations = new SqlCommand($"SELECT * FROM Room WHERE hotelID={hotelId}", this.conn);    // Sql command to get all hotels
+                SqlCommand getReservations = new SqlCommand($"SELECT * FROM Room WHERE hotelId={hotelId}", this.conn);    // Sql command to get all hotels
 
                 rdr = getReservations.ExecuteReader();  // Execute command
 
                 while (rdr.Read())  // Loop through every entry in the table
                 {
                     int roomId = (int)rdr[0];
-                    string roomType = (string)rdr[1];
-                    float roomPrice = (float)rdr[2];
-                    string amenities = (string)rdr[3];
-                    bool reserved = (bool)rdr[4];
+                    string roomType = (string)rdr[3];
+                    double roomPrice = (double)rdr[2];
+                    string amenities = (string)rdr[4];
+                    bool reserved = (int)rdr[5] != 0;
                     
-                    Room room = new Room(roomId, hotelId, roomType, roomPrice, amenities, reserved);
+                    Room room = new Room(roomId, hotelId, roomType, (float)roomPrice, amenities, reserved);
 
                     dataList.Add(roomId, room);
                 }
@@ -302,7 +346,7 @@ namespace HotelManagementProject
             {
                 this.conn.Open();   // Open the SQL connection
 
-                SqlCommand getNumberOfCustomers = new SqlCommand("SELECT sum(RewardsPoints) FROM Customer", this.conn);    // Sql command to sum of rewards points
+                SqlCommand getNumberOfCustomers = new SqlCommand("SELECT sum(RewardPoints) FROM Customer", this.conn);    // Sql command to sum of rewards points
 
                 count = (int)getNumberOfCustomers.ExecuteScalar(); // Execute command
             }
@@ -436,7 +480,6 @@ namespace HotelManagementProject
             }
 
             summaryReport += $"Chain Occupancy Rate - {(float)totalReserved / totalRooms} - ${totalRevenue}\n\n";   // Add total occupancy rate data
-
 
             // Compute other statistics
 
