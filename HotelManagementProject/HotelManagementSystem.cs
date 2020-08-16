@@ -118,6 +118,108 @@ namespace HotelManagementProject
             return dataList;    // Return the list of data
         }
 
+        public Dictionary<int, Reservation> getActiveReservationsOfCustomer(int customerId)
+        {
+            Dictionary<int, Reservation> dataList = new Dictionary<int, Reservation>();     // Empty list to hold data to return
+
+            SqlDataReader rdr = null;   // For reading data
+
+            try
+            {
+                this.conn.Open();   // Open the SQL connection
+
+                SqlCommand getReservations = new SqlCommand($"SELECT * FROM Reservation WHERE CustomerId={customerId}", this.conn);    // Sql command to get all reservations
+
+                rdr = getReservations.ExecuteReader();  // Execute command
+
+                while (rdr.Read())  // Loop through every entry in the table
+                {
+                    int reservationId = (int)rdr[0];
+                    int roomId = (int)rdr[1];
+
+                    DateTime reservationStartDate = DateTime.ParseExact((string)rdr[3], "MM-dd-yy", null);
+                    DateTime reservationEndDate = DateTime.ParseExact((string)rdr[4], "MM-dd-yy", null);
+                    bool cancelled = (int)rdr[7] != 0;
+                    bool upgraded = (int)rdr[8] != 0;
+                    double cost = (double)rdr[5];
+                    int rewardsPointsEarned = (int)rdr[9];
+                    int rewardsPointsSpent = (int)rdr[10];
+                    DateTime dateOfReservation = DateTime.ParseExact((string)rdr[11], "MM-dd-yy", null);
+                    int waitlist = (int)rdr[6];
+
+                    if (DateTime.Compare(reservationStartDate, DateTime.Now) > 0 && !cancelled && !upgraded)
+                    {
+                        Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, (float)cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
+                        dataList.Add(reservationId, reservation);
+                    }
+                }
+
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();    // Close the data reader
+                }
+
+                if (this.conn != null)
+                {
+                    this.conn.Close();  // Close the connection
+                }
+            }
+
+            return dataList;    // Return the list of data
+        }
+
+        public Dictionary<int, Reservation> getReservationsByRoom(int roomId)
+        {
+            Dictionary<int, Reservation> dataList = new Dictionary<int, Reservation>();     // Empty list to hold data to return
+
+            SqlDataReader rdr = null;   // For reading data
+
+            try
+            {
+                this.conn.Open();   // Open the SQL connection
+
+                SqlCommand getReservations = new SqlCommand($"SELECT * FROM Reservation WHERE RoomId={roomId}", this.conn);    // Sql command to get all reservations
+
+                rdr = getReservations.ExecuteReader();  // Execute command
+
+                while (rdr.Read())  // Loop through every entry in the table
+                {
+                    int reservationId = (int)rdr[0];
+                    int customerId = (int)rdr[2];
+                    DateTime reservationStartDate = DateTime.ParseExact((string)rdr[3], "MM-dd-yy", null);
+                    DateTime reservationEndDate = DateTime.ParseExact((string)rdr[4], "MM-dd-yy", null);
+                    bool cancelled = (int)rdr[7] != 0;
+                    bool upgraded = (int)rdr[8] != 0;
+                    double cost = (double)rdr[5];
+                    int rewardsPointsEarned = (int)rdr[9];
+                    int rewardsPointsSpent = (int)rdr[10];
+                    DateTime dateOfReservation = DateTime.ParseExact((string)rdr[11], "MM-dd-yy", null);
+                    int waitlist = (int)rdr[6];
+
+                    Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, (float)cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
+                    dataList.Add(reservationId, reservation);
+                }
+
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();    // Close the data reader
+                }
+
+                if (this.conn != null)
+                {
+                    this.conn.Close();  // Close the connection
+                }
+            }
+
+            return dataList;    // Return the list of data
+        }
+
         // Returns a dictionary containing the data for every hotel in the database
         public Dictionary<int, Hotel> getHotelData()
         {

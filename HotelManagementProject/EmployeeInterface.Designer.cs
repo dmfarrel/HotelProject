@@ -401,6 +401,7 @@
             this.hotelListBox.Name = "hotelListBox";
             this.hotelListBox.Size = new System.Drawing.Size(254, 56);
             this.hotelListBox.TabIndex = 15;
+            this.hotelListBox.SelectedIndexChanged += new System.EventHandler(this.hotelListBox_SelectedIndexChanged);
             // 
             // hotelLabel
             // 
@@ -427,6 +428,7 @@
             this.roomListBox.Name = "roomListBox";
             this.roomListBox.Size = new System.Drawing.Size(254, 82);
             this.roomListBox.TabIndex = 13;
+            this.roomListBox.SelectedIndexChanged += new System.EventHandler(this.roomListBox_SelectedIndexChanged);
             // 
             // newReservationButton
             // 

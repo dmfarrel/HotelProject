@@ -16,6 +16,7 @@ namespace HotelManagementProject
         private HotelManagementSystem hms;                  // HMS class for use with all those other things
 
         private Dictionary<int, Customer> customers;
+        private Dictionary<int, Hotel> hotels;
 
         public EmployeeInterface()
         {
@@ -30,7 +31,14 @@ namespace HotelManagementProject
 
             foreach (var pair in customers)
             {
-                customerListBox.Items.Add(pair.Value.getName());
+                customerListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getDateOfBirth()}");
+            }
+
+            hotels = hms.getHotelData();
+
+            foreach (var pair in hotels)
+            {
+                hotelListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getStreetAddress()}, {pair.Value.getCity()}, {pair.Value.getState()}");
             }
         }
 
@@ -70,6 +78,34 @@ namespace HotelManagementProject
         }
 
         private void customerListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int customerId = customerListBox.SelectedIndex + 1;
+
+            Dictionary<int, Reservation> activeReservations = this.hms.getActiveReservationsOfCustomer(customerId);
+
+            reservationListBox.Items.Clear();
+
+            foreach (var pair in activeReservations)
+            {
+                reservationListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getRoomId()} - {pair.Value.getStartDate()} - {pair.Value.getEndDate()}");
+            }
+        }
+
+        private void hotelListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int hotelId = hotelListBox.SelectedIndex + 1;
+
+            Dictionary<int, Room> rooms = this.hms.getRoomsByHotelId(hotelId);
+
+            roomListBox.Items.Clear();
+
+            foreach (var pair in rooms)
+            {
+                roomListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getType()} - {pair.Value.getPrice()}");
+            }
+        }
+
+        private void roomListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
