@@ -154,6 +154,12 @@ namespace HotelManagementProject
         // Update the user's information.
         private void updateInformationButton_Click(object sender, EventArgs e)
         {
+            if (this.customer.getUsername().Equals(this.usernameTextBox.Text))
+            {
+                this.hms.updateCustomerInformation(this.customer.getId(), this.firstTextBox.Text, this.usernameTextBox.Text, this.passwordTextBox.Text);
+                return;
+            }
+
             Dictionary<int, Customer> customers = this.hms.getCustomerData();
 
             // Check to see if an inputted username already exists

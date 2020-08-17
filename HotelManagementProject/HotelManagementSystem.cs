@@ -99,6 +99,29 @@ namespace HotelManagementProject
             return true;
         }
 
+        public bool updateCustomerRewardPoints(int customerId, int rewardPoints)
+        {
+            try
+            {
+                conn.Open();
+
+                string updateString = $"UPDATE Customer SET RewardPoints={rewardPoints} WHERE CustomerId={customerId}";
+
+                SqlCommand cmd = new SqlCommand(updateString, conn);
+
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
         // Insert new customer into table
         public bool createNewCustomer(Customer customer)
         {

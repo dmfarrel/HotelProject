@@ -35,13 +35,18 @@ namespace HotelManagementProject
         private void submitButton_Click(object sender, EventArgs e)
         {
 
+            int duration = (int)(this.endDate - this.startDate).TotalDays;
+
             // Calculate cost
-            float cost = (float)(this.endDate - this.startDate).TotalDays * this.room.getPrice() /* - amount earned from rewards*/;
+            float cost = duration * this.room.getPrice() /* - amount earned from rewards*/;
+            int rewardPointsEarned = duration * 25;
+            int rewardPointsSpent = 0;
             
             // Still needs rewards points earned and rewards points spent
-            Reservation reservation = new Reservation(0, customer.getId(), room.getId(), startDate, endDate, DateTime.Now, cost, 0, 0, false, false, 0);
+            Reservation reservation = new Reservation(0, customer.getId(), room.getId(), startDate, endDate, DateTime.Now, cost, rewardPointsEarned, rewardPointsSpent, false, false, 0);
 
             this.hms.insertReservation(reservation);
+            this.hms.updateCustomerRewardPoints(customer.getId(), customer.getRewardPoints() - rewardPointsSpent + rewardPointsEarned);
 
             this.Close();
         }
