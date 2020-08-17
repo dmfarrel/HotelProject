@@ -71,6 +71,8 @@ namespace HotelManagementProject
             TransactionInterface transactionInterface = new TransactionInterface(this.customer, this.hms.getRoomData()[roomId], startDate, endDate);
 
             transactionInterface.Show();    // Show a transaction interface
+
+            this.customer = hms.getCustomerData()[this.customer.getId()];
         }
 
         private void CustomerInterface_Load(object sender, EventArgs e)
@@ -174,6 +176,11 @@ namespace HotelManagementProject
             }
 
             this.hms.updateCustomerInformation(this.customer.getId(), this.firstTextBox.Text, this.usernameTextBox.Text, this.passwordTextBox.Text);
+        }
+
+        public void setCustomer(Customer customer)
+        {
+            this.customer = customer;
         }
     }
 }

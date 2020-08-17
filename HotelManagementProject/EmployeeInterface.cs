@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.IO;
+
 namespace HotelManagementProject
 {
     public partial class EmployeeInterface : Form
@@ -201,6 +203,83 @@ namespace HotelManagementProject
             // Set to cancelled in the database and remove it from the list
             this.hms.cancelReservation(reservationId);
             this.reservationListBox.Items.RemoveAt(this.reservationListBox.SelectedIndex);
+        }
+
+        // Parses the weird file format for the input files
+        private DateTime parseFileDateString(string date)
+        {
+            string year = date.Substring(0, 4).Substring(2, 2);
+            string month = date.Substring(4, 2);
+            string day = date.Substring(6, 2);
+
+            return DateTime.ParseExact($"{month}-{day}-{year}", "MM-dd-yy", null);
+        }
+
+        // Method to load the external file for reservations
+        private void loadReservationFileButton_Click(object sender, EventArgs e)
+        {
+            string path = loadReservationFileTextBox.Text;
+
+            // Check if file exists in the first place
+            if (!File.Exists(path))
+            {
+                ExceptionInterface excep = new ExceptionInterface("This file does not exist");
+                excep.Show();
+                return;
+            }
+
+            string[] lines = System.IO.File.ReadAllLines(path); // Read file into an array of lines
+
+            if (lines.Length == 0)  // If the file is empty, throw an exception
+            {
+                ExceptionInterface excep = new ExceptionInterface("This file is empty");
+                excep.Show();
+                return;
+            }
+
+            DateTime creationDate = parseFileDateString(lines[0]);  // Parse out the creation date
+
+            // Loop through each entry in the file
+            for (int i = 1; i < lines.Length; i++)
+            {
+                String[] tokens = lines[i].Split(' ');
+
+                int reservationId = Convert.ToInt32(tokens[1]);
+                int customerId = Convert.ToInt32(tokens[3]);
+                int hotelId = Convert.ToInt32(tokens[5]);
+                int roomId = Convert.ToInt32(tokens[7]);
+
+                DateTime startDate = parseFileDateString(tokens[9]);
+                DateTime endDate = parseFileDateString(tokens[11]);
+
+                Dictionary<int, Reservation> reservations = this.hms.getReservationsByRoom(roomId);
+
+                foreach (var pair in reservations)
+                {
+                    if (!(DateTime.Compare(endDate, pair.Value.getStartDate()) <= 0 || DateTime.Compare(startDate, pair.Value.getEndDate()) >= 0))
+                    {
+                        // If the dates overlap, throw an exception and exit
+                        ExceptionInterface excep = new ExceptionInterface("One inputted reservation overlaps with existing");
+                        excep.Show();
+                        return;
+                    }
+                }
+
+                Customer customer = this.hms.getCustomerData()[customerId];
+                Room room = this.hms.getRoomData()[roomId];
+
+                int duration = (int)(endDate - startDate).TotalDays;
+
+                // Calculate cost
+                float cost = duration * room.getPrice() /* - amount earned from rewards*/;
+                int rewardPointsEarned = duration * 25;
+                int rewardPointsSpent = 0;
+
+                Reservation reservation = new Reservation(0, customer.getId(), room.getId(), startDate, endDate, creationDate, cost, rewardPointsEarned, rewardPointsSpent, false, false, 0);
+
+                this.hms.insertReservation(reservation);
+                this.hms.updateCustomerRewardPoints(customer.getId(), customer.getRewardPoints() - rewardPointsSpent + rewardPointsEarned);
+            }
         }
     }
 }

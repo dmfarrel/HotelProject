@@ -329,6 +329,7 @@
             this.loadReservationFileButton.TabIndex = 20;
             this.loadReservationFileButton.Text = "Load File";
             this.loadReservationFileButton.UseVisualStyleBackColor = true;
+            this.loadReservationFileButton.Click += new System.EventHandler(this.loadReservationFileButton_Click);
             // 
             // modifyButton
             // 
