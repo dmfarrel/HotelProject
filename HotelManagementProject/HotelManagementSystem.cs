@@ -21,7 +21,6 @@ namespace HotelManagementProject
         // Inserts a reservation into the database
         public bool insertReservation(Reservation reservation)
         {
-            
             try
             {
                 conn.Open();
@@ -86,6 +85,66 @@ namespace HotelManagementProject
                 string updateString = $"UPDATE Customer SET Name='{newName}', USername='{newUsername}', Password='{newPassword}' WHERE CustomerId={customerId}";
 
                 SqlCommand cmd = new SqlCommand(updateString, conn);
+
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
+        // Insert new customer into table
+        public bool createNewCustomer(Customer customer)
+        {
+            try
+            {
+                conn.Open();
+
+                string name = customer.getName();
+                string username = customer.getUsername();
+                string password = customer.getPassword();
+                string dateOfBirth = customer.getDateOfBirth().ToString("MM-dd-yy");
+                
+                string insertString = $"INSERT INTO Customer (Name,Username,Password,DateOfBirth,RewardPoints) " +
+                                      $"VALUES ('{name}','{username}','{password}','{dateOfBirth}',0)";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
+        // Insert new employee into table
+        public bool createNewEmployee(Employee employee)
+        {
+            try
+            {
+                conn.Open();
+
+                string name = employee.getName();
+                string username = employee.getUsername();
+                string password = employee.getPassword();
+                string dateOfBirth = employee.getDateOfBirth().ToString("MM-dd-yy");
+
+                string insertString = $"INSERT INTO Employee (Name,Username,Password,DateOfBirth,Wage) " +
+                                      $"VALUES ('{name}','{username}','{password}','{dateOfBirth}',7.25)";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
 
                 cmd.ExecuteNonQuery();
             }
@@ -405,7 +464,6 @@ namespace HotelManagementProject
                     string username = (string)rdr[2];
                     string password = (string)rdr[3];
                     DateTime dateOfBirth = DateTime.ParseExact((string)rdr[4], "MM-dd-yy", null);
-                    int rewardPoints = (int)rdr[5];
 
                     Employee employee = new Employee(employeeId, name, username, password, dateOfBirth); // Create hotel data object
 

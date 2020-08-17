@@ -32,11 +32,9 @@
             this.accountButton = new System.Windows.Forms.Button();
             this.accountPasswordTextBox = new System.Windows.Forms.TextBox();
             this.customerRadioButton = new System.Windows.Forms.RadioButton();
-            this.accountLastTextBox = new System.Windows.Forms.TextBox();
             this.accountFirstTextBox = new System.Windows.Forms.TextBox();
             this.accountUsernameTextBox = new System.Windows.Forms.TextBox();
             this.accountPasswordLabel = new System.Windows.Forms.Label();
-            this.accountLastLabel = new System.Windows.Forms.Label();
             this.accountFirstLabel = new System.Windows.Forms.Label();
             this.accountUsernameLabel = new System.Windows.Forms.Label();
             this.employeeRadioButton = new System.Windows.Forms.RadioButton();
@@ -46,33 +44,35 @@
             this.loginUsernameTextBox = new System.Windows.Forms.TextBox();
             this.loginPasswordLabel = new System.Windows.Forms.Label();
             this.loginUsernameLabel = new System.Windows.Forms.Label();
+            this.accountDOBTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.accountGroupBox.SuspendLayout();
             this.loginGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // accountGroupBox
             // 
+            this.accountGroupBox.Controls.Add(this.accountDOBTextBox);
+            this.accountGroupBox.Controls.Add(this.label1);
             this.accountGroupBox.Controls.Add(this.accountButton);
             this.accountGroupBox.Controls.Add(this.accountPasswordTextBox);
             this.accountGroupBox.Controls.Add(this.customerRadioButton);
-            this.accountGroupBox.Controls.Add(this.accountLastTextBox);
             this.accountGroupBox.Controls.Add(this.accountFirstTextBox);
             this.accountGroupBox.Controls.Add(this.accountUsernameTextBox);
             this.accountGroupBox.Controls.Add(this.accountPasswordLabel);
-            this.accountGroupBox.Controls.Add(this.accountLastLabel);
             this.accountGroupBox.Controls.Add(this.accountFirstLabel);
             this.accountGroupBox.Controls.Add(this.accountUsernameLabel);
             this.accountGroupBox.Controls.Add(this.employeeRadioButton);
             this.accountGroupBox.Location = new System.Drawing.Point(190, 6);
             this.accountGroupBox.Name = "accountGroupBox";
-            this.accountGroupBox.Size = new System.Drawing.Size(184, 265);
+            this.accountGroupBox.Size = new System.Drawing.Size(184, 275);
             this.accountGroupBox.TabIndex = 4;
             this.accountGroupBox.TabStop = false;
             this.accountGroupBox.Text = "Create New Account";
             // 
             // accountButton
             // 
-            this.accountButton.Location = new System.Drawing.Point(9, 233);
+            this.accountButton.Location = new System.Drawing.Point(6, 233);
             this.accountButton.Name = "accountButton";
             this.accountButton.Size = new System.Drawing.Size(164, 23);
             this.accountButton.TabIndex = 10;
@@ -82,7 +82,7 @@
             // 
             // accountPasswordTextBox
             // 
-            this.accountPasswordTextBox.Location = new System.Drawing.Point(9, 161);
+            this.accountPasswordTextBox.Location = new System.Drawing.Point(9, 122);
             this.accountPasswordTextBox.Name = "accountPasswordTextBox";
             this.accountPasswordTextBox.Size = new System.Drawing.Size(164, 20);
             this.accountPasswordTextBox.TabIndex = 9;
@@ -90,20 +90,13 @@
             // customerRadioButton
             // 
             this.customerRadioButton.AutoSize = true;
-            this.customerRadioButton.Location = new System.Drawing.Point(9, 187);
+            this.customerRadioButton.Location = new System.Drawing.Point(6, 187);
             this.customerRadioButton.Name = "customerRadioButton";
             this.customerRadioButton.Size = new System.Drawing.Size(69, 17);
             this.customerRadioButton.TabIndex = 8;
             this.customerRadioButton.TabStop = true;
             this.customerRadioButton.Text = "Customer";
             this.customerRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // accountLastTextBox
-            // 
-            this.accountLastTextBox.Location = new System.Drawing.Point(9, 122);
-            this.accountLastTextBox.Name = "accountLastTextBox";
-            this.accountLastTextBox.Size = new System.Drawing.Size(164, 20);
-            this.accountLastTextBox.TabIndex = 7;
             // 
             // accountFirstTextBox
             // 
@@ -122,29 +115,20 @@
             // accountPasswordLabel
             // 
             this.accountPasswordLabel.AutoSize = true;
-            this.accountPasswordLabel.Location = new System.Drawing.Point(6, 145);
+            this.accountPasswordLabel.Location = new System.Drawing.Point(6, 106);
             this.accountPasswordLabel.Name = "accountPasswordLabel";
             this.accountPasswordLabel.Size = new System.Drawing.Size(53, 13);
             this.accountPasswordLabel.TabIndex = 4;
             this.accountPasswordLabel.Text = "Password";
-            // 
-            // accountLastLabel
-            // 
-            this.accountLastLabel.AutoSize = true;
-            this.accountLastLabel.Location = new System.Drawing.Point(6, 106);
-            this.accountLastLabel.Name = "accountLastLabel";
-            this.accountLastLabel.Size = new System.Drawing.Size(58, 13);
-            this.accountLastLabel.TabIndex = 3;
-            this.accountLastLabel.Text = "Last Name";
             // 
             // accountFirstLabel
             // 
             this.accountFirstLabel.AutoSize = true;
             this.accountFirstLabel.Location = new System.Drawing.Point(6, 67);
             this.accountFirstLabel.Name = "accountFirstLabel";
-            this.accountFirstLabel.Size = new System.Drawing.Size(57, 13);
+            this.accountFirstLabel.Size = new System.Drawing.Size(35, 13);
             this.accountFirstLabel.TabIndex = 2;
-            this.accountFirstLabel.Text = "First Name";
+            this.accountFirstLabel.Text = "Name";
             // 
             // accountUsernameLabel
             // 
@@ -158,7 +142,7 @@
             // employeeRadioButton
             // 
             this.employeeRadioButton.AutoSize = true;
-            this.employeeRadioButton.Location = new System.Drawing.Point(9, 210);
+            this.employeeRadioButton.Location = new System.Drawing.Point(6, 210);
             this.employeeRadioButton.Name = "employeeRadioButton";
             this.employeeRadioButton.Size = new System.Drawing.Size(71, 17);
             this.employeeRadioButton.TabIndex = 0;
@@ -173,7 +157,7 @@
             this.loginGroupBox.Controls.Add(this.loginUsernameTextBox);
             this.loginGroupBox.Controls.Add(this.loginPasswordLabel);
             this.loginGroupBox.Controls.Add(this.loginUsernameLabel);
-            this.loginGroupBox.Location = new System.Drawing.Point(12, 60);
+            this.loginGroupBox.Location = new System.Drawing.Point(12, 73);
             this.loginGroupBox.Name = "loginGroupBox";
             this.loginGroupBox.Size = new System.Drawing.Size(172, 150);
             this.loginGroupBox.TabIndex = 3;
@@ -222,11 +206,27 @@
             this.loginUsernameLabel.TabIndex = 0;
             this.loginUsernameLabel.Text = "Username";
             // 
+            // accountDOBTextBox
+            // 
+            this.accountDOBTextBox.Location = new System.Drawing.Point(9, 161);
+            this.accountDOBTextBox.Name = "accountDOBTextBox";
+            this.accountDOBTextBox.Size = new System.Drawing.Size(164, 20);
+            this.accountDOBTextBox.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 145);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(66, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Date of Birth";
+            // 
             // LoginInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 279);
+            this.ClientSize = new System.Drawing.Size(386, 293);
             this.Controls.Add(this.accountGroupBox);
             this.Controls.Add(this.loginGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -247,11 +247,9 @@
         private System.Windows.Forms.Button accountButton;
         private System.Windows.Forms.TextBox accountPasswordTextBox;
         private System.Windows.Forms.RadioButton customerRadioButton;
-        private System.Windows.Forms.TextBox accountLastTextBox;
         private System.Windows.Forms.TextBox accountFirstTextBox;
         private System.Windows.Forms.TextBox accountUsernameTextBox;
         private System.Windows.Forms.Label accountPasswordLabel;
-        private System.Windows.Forms.Label accountLastLabel;
         private System.Windows.Forms.Label accountFirstLabel;
         private System.Windows.Forms.Label accountUsernameLabel;
         private System.Windows.Forms.RadioButton employeeRadioButton;
@@ -261,6 +259,8 @@
         private System.Windows.Forms.TextBox loginUsernameTextBox;
         private System.Windows.Forms.Label loginPasswordLabel;
         private System.Windows.Forms.Label loginUsernameLabel;
+        private System.Windows.Forms.TextBox accountDOBTextBox;
+        private System.Windows.Forms.Label label1;
     }
 }
 
