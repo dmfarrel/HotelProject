@@ -158,7 +158,7 @@ namespace HotelManagementProject
             // Loop through each room and add it to the listbox
             foreach (var pair in rooms)
             {
-                roomListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getType()} - {pair.Value.getPrice()}");
+                roomListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getType()} - ${pair.Value.getPrice()}");
             }
         }
 

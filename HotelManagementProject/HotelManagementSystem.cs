@@ -236,7 +236,7 @@ namespace HotelManagementProject
                     if (creationDate)
                     {
                         // If the reservation exists within the range, add it to the list
-                        if (DateTime.Compare(startingDate, dateOfReservation) >= 0 && DateTime.Compare(dateOfReservation, endingDate) <= 0)
+                        if (DateTime.Compare(startingDate, dateOfReservation) <= 0 && DateTime.Compare(dateOfReservation, endingDate) <= 0)
                         {
                             Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, (float)cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
                             dataList.Add(reservationId, reservation);
@@ -245,7 +245,7 @@ namespace HotelManagementProject
                     else
                     {
                         // If the reservation exists within the range, add it to the list
-                        if (DateTime.Compare(startingDate, reservationStartDate) >= 0 && DateTime.Compare(reservationEndDate, endingDate) <= 0)
+                        if (DateTime.Compare(startingDate, reservationStartDate) <= 0 && DateTime.Compare(reservationEndDate, endingDate) <= 0)
                         {
                             Reservation reservation = new Reservation(reservationId, customerId, roomId, reservationStartDate, reservationEndDate, dateOfReservation, (float)cost, rewardsPointsEarned, rewardsPointsSpent, cancelled, upgraded, waitlist);
                             dataList.Add(reservationId, reservation);
@@ -616,6 +616,28 @@ namespace HotelManagementProject
 
             return count;
         }
+        
+        // Count how many total rooms are reserved for any amount of time in a set of reservations
+        public int countReservedRooms(Dictionary<int, Reservation> reservations)
+        {
+            int count = 0;
+
+            HashSet<int> rooms = new HashSet<int>();
+
+            foreach (var pair in reservations)
+            {
+                int reservationId = pair.Key;
+                Reservation data = pair.Value;
+
+                if (!rooms.Contains(data.getRoomId()))
+                {
+                    rooms.Add(data.getRoomId());
+                    count++;
+                }
+            }
+
+            return count;
+        }
 
         // Count how many reservations have been cancelled in a set
         public int countCancelledReservations(Dictionary<int, Reservation> reservations)
@@ -791,10 +813,10 @@ namespace HotelManagementProject
 
             // Add rewards points information to the report
             summaryReport +=    "Reward Points Summary\n" +
-                                $"Rewards outstanding on date {startingDateString} - {currentPoints + netPointsAfterEndDate + netPointsDuringPeriod}\n" +
-                                $"Rewards redeemed between {startingDateString} and {endingDateString} - {netPointsDuringPeriod - pointsEarnedDuringPeriod}\n" +
+                                $"Rewards outstanding on date {startingDateString} - {currentPoints - netPointsAfterEndDate - netPointsDuringPeriod}\n" +
+                                $"Rewards redeemed between {startingDateString} and {endingDateString} - {-1 * (netPointsDuringPeriod - pointsEarnedDuringPeriod)}\n" +
                                 $"Rewards earned between {startingDateString} and {endingDateString} - {pointsEarnedDuringPeriod}\n" +
-                                $"Rewards outstanding on date {endingDateString} - {currentPoints + netPointsAfterEndDate}\n\n";
+                                $"Rewards outstanding on date {endingDateString} - {currentPoints - netPointsAfterEndDate}\n\n";
 
 
             // Compute per hotel occupancy stats
@@ -814,9 +836,20 @@ namespace HotelManagementProject
                 Hotel data = pair.Value;    // Get hotel data object
 
                 Dictionary<int, Room> rooms = this.getRoomsByHotelId(key);  // Get all rooms for this hotel
+                Dictionary<int, Reservation> hotelReservations = new Dictionary<int, Reservation>(); // Create an empty dictionary for storing reservations
+
+                foreach (var room in rooms)
+                {
+                    int roomId = room.Key;
+                    
+                    Dictionary<int, Reservation> roomReservs = this.getReservationsByRoom(roomId);
+                    roomReservs.ToList().ForEach(x => hotelReservations.Add(x.Key, x.Value));
+                }
 
                 int roomsInHotel = rooms.Count; // Count the number of rooms
-                int reservedRoomsInHotel = this.countReservedRooms(rooms);  // Count how many are reserved
+                //int reservedRoomsInHotel = this.countReservedRooms(rooms);  // Count how many are reserved
+                float hotelRevenue = this.sumRevenueAcrossReservations(hotelReservations);
+                int reservedRoomsInHotel = this.countReservedRooms(hotelReservations);
                 int freeRoomsInHotel = roomsInHotel - reservedRoomsInHotel; // Calculate how many rooms are free
 
                 totalRooms += roomsInHotel;
@@ -824,7 +857,7 @@ namespace HotelManagementProject
 
                 float occupancyRate = (float)reservedRoomsInHotel / roomsInHotel;   // Compute occupancy rate
 
-                summaryReport += $"Hotel {data.getName()} Occupancy Rate - {occupancyRate}\n";  // Add individual occupancy rates
+                summaryReport += $"{data.getName()} Occupancy Rate - {occupancyRate} - ${hotelRevenue}\n";  // Add individual occupancy rates
             }
 
             summaryReport += $"Chain Occupancy Rate - {(float)totalReserved / totalRooms} - ${totalRevenue}\n\n";   // Add total occupancy rate data
