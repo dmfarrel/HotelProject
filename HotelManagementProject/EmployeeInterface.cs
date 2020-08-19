@@ -87,6 +87,14 @@ namespace HotelManagementProject
             DateTime startDate = roomReservationCalendar.SelectionStart;
             DateTime endDate = roomReservationCalendar.SelectionEnd;
 
+            if (DateTime.Compare(startDate, DateTime.Now) <= 0)
+            {
+                // If the dates overlap with the past, throw an exception and exit
+                ExceptionInterface excep = new ExceptionInterface("Selected reservation must take place in the future.");
+                excep.Show();
+                return;
+            }
+
             Dictionary<int, Reservation> reservations = this.hms.getReservationsByRoom(roomId); // Fetch all existing reservations for the room
 
             // Check selected range against all reservations. If there's an overlap, throw an exception and exit
@@ -129,6 +137,15 @@ namespace HotelManagementProject
                 excep.Show();
                 return;
             }
+
+            if (DateTime.Compare(startingDate, endingDate) > 0)
+            {
+                // If the parse fails, throw an exception and exit
+                ExceptionInterface excep = new ExceptionInterface("This range of dates is invalid");
+                excep.Show();
+                return;
+            }
+
 
             this.summaryReportTextBox.Text = this.hms.generateSummaryReport(startingDate, endingDate).Replace("\n", Environment.NewLine);  // Use the hms to generate report and assign it to UI
         }
@@ -237,7 +254,7 @@ namespace HotelManagementProject
                 return;
             }
 
-            DateTime creationDate = parseFileDateString(lines[0]);  // Parse out the creation date
+            DateTime creationDate = parseFileDateString(lines[0].Split(' ')[1]);  // Parse out the creation date
 
             // Loop through each entry in the file
             for (int i = 1; i < lines.Length; i++)
@@ -249,8 +266,8 @@ namespace HotelManagementProject
                 int hotelId = Convert.ToInt32(tokens[5]);
                 int roomId = Convert.ToInt32(tokens[7]);
 
-                DateTime startDate = parseFileDateString(tokens[9]);
-                DateTime endDate = parseFileDateString(tokens[11]);
+                DateTime startDate = parseFileDateString(tokens[11]);
+                DateTime endDate = parseFileDateString(tokens[13]);
 
                 Dictionary<int, Reservation> reservations = this.hms.getReservationsByRoom(roomId);
 
