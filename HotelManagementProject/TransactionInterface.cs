@@ -53,7 +53,10 @@ namespace HotelManagementProject
 
         private void TransactionInterface_Load(object sender, EventArgs e)
         {
+            int duration = (int)(this.endDate - this.startDate).TotalDays;
+            float cost = duration * this.room.getPrice();
 
+            this.costLabel.Text = $"Cost: {cost}";
         }
     }
 }
