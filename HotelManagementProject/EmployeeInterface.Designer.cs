@@ -32,10 +32,6 @@
             this.removeLocationButton = new System.Windows.Forms.Button();
             this.createNewLocationButton = new System.Windows.Forms.Button();
             this.managementLocationNameTextBox = new System.Windows.Forms.TextBox();
-            this.managementRoomTypeListBox = new System.Windows.Forms.ListBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.managementRoomNameTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.createNewRoomButton = new System.Windows.Forms.Button();
             this.markRoomAvailableButton = new System.Windows.Forms.Button();
             this.markRoomUnavailableButton = new System.Windows.Forms.Button();
@@ -68,11 +64,15 @@
             this.reservationListBox = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.manageHotelAddressTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.manageHotelCity = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.manageHotelState = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.roomPriceTextbox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.roomTypeTextbox = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -80,20 +80,20 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.roomPriceTextbox);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.roomTypeTextbox);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.textBox3);
+            this.groupBox3.Controls.Add(this.manageHotelState);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.manageHotelCity);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.manageHotelAddressTextBox);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.removeLocationButton);
             this.groupBox3.Controls.Add(this.createNewLocationButton);
             this.groupBox3.Controls.Add(this.managementLocationNameTextBox);
-            this.groupBox3.Controls.Add(this.managementRoomTypeListBox);
-            this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.managementRoomNameTextBox);
-            this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.createNewRoomButton);
             this.groupBox3.Controls.Add(this.markRoomAvailableButton);
             this.groupBox3.Controls.Add(this.markRoomUnavailableButton);
@@ -133,39 +133,6 @@
             this.managementLocationNameTextBox.Name = "managementLocationNameTextBox";
             this.managementLocationNameTextBox.Size = new System.Drawing.Size(149, 20);
             this.managementLocationNameTextBox.TabIndex = 12;
-            // 
-            // managementRoomTypeListBox
-            // 
-            this.managementRoomTypeListBox.FormattingEnabled = true;
-            this.managementRoomTypeListBox.Location = new System.Drawing.Point(336, 36);
-            this.managementRoomTypeListBox.Name = "managementRoomTypeListBox";
-            this.managementRoomTypeListBox.Size = new System.Drawing.Size(163, 95);
-            this.managementRoomTypeListBox.TabIndex = 11;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(333, 20);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(62, 13);
-            this.label12.TabIndex = 10;
-            this.label12.Text = "Room Type";
-            // 
-            // managementRoomNameTextBox
-            // 
-            this.managementRoomNameTextBox.Location = new System.Drawing.Point(336, 150);
-            this.managementRoomNameTextBox.Name = "managementRoomNameTextBox";
-            this.managementRoomNameTextBox.Size = new System.Drawing.Size(164, 20);
-            this.managementRoomNameTextBox.TabIndex = 9;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(333, 134);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(66, 13);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "Room Name";
             // 
             // createNewRoomButton
             // 
@@ -236,6 +203,7 @@
             this.managementHotelListBox.Name = "managementHotelListBox";
             this.managementHotelListBox.Size = new System.Drawing.Size(149, 43);
             this.managementHotelListBox.TabIndex = 0;
+            this.managementHotelListBox.SelectedIndexChanged += new System.EventHandler(this.managementHotelListBox_SelectedIndexChanged_1);
             // 
             // groupBox2
             // 
@@ -469,12 +437,12 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "Street Address";
             // 
-            // textBox1
+            // manageHotelAddressTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(10, 137);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(149, 20);
-            this.textBox1.TabIndex = 16;
+            this.manageHotelAddressTextBox.Location = new System.Drawing.Point(10, 137);
+            this.manageHotelAddressTextBox.Name = "manageHotelAddressTextBox";
+            this.manageHotelAddressTextBox.Size = new System.Drawing.Size(149, 20);
+            this.manageHotelAddressTextBox.TabIndex = 16;
             // 
             // label3
             // 
@@ -485,12 +453,12 @@
             this.label3.TabIndex = 19;
             this.label3.Text = "City";
             // 
-            // textBox2
+            // manageHotelCity
             // 
-            this.textBox2.Location = new System.Drawing.Point(10, 176);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(149, 20);
-            this.textBox2.TabIndex = 18;
+            this.manageHotelCity.Location = new System.Drawing.Point(10, 176);
+            this.manageHotelCity.Name = "manageHotelCity";
+            this.manageHotelCity.Size = new System.Drawing.Size(149, 20);
+            this.manageHotelCity.TabIndex = 18;
             // 
             // label4
             // 
@@ -501,12 +469,44 @@
             this.label4.TabIndex = 21;
             this.label4.Text = "State";
             // 
-            // textBox3
+            // manageHotelState
             // 
-            this.textBox3.Location = new System.Drawing.Point(10, 215);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(149, 20);
-            this.textBox3.TabIndex = 20;
+            this.manageHotelState.Location = new System.Drawing.Point(10, 215);
+            this.manageHotelState.Name = "manageHotelState";
+            this.manageHotelState.Size = new System.Drawing.Size(149, 20);
+            this.manageHotelState.TabIndex = 20;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(333, 114);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(62, 13);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "Room Price";
+            // 
+            // roomPriceTextbox
+            // 
+            this.roomPriceTextbox.Location = new System.Drawing.Point(333, 130);
+            this.roomPriceTextbox.Name = "roomPriceTextbox";
+            this.roomPriceTextbox.Size = new System.Drawing.Size(164, 20);
+            this.roomPriceTextbox.TabIndex = 28;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(333, 78);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(62, 13);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Room Type";
+            // 
+            // roomTypeTextbox
+            // 
+            this.roomTypeTextbox.Location = new System.Drawing.Point(333, 91);
+            this.roomTypeTextbox.Name = "roomTypeTextbox";
+            this.roomTypeTextbox.Size = new System.Drawing.Size(164, 20);
+            this.roomTypeTextbox.TabIndex = 26;
             // 
             // EmployeeInterface
             // 
@@ -536,10 +536,6 @@
         private System.Windows.Forms.Button removeLocationButton;
         private System.Windows.Forms.Button createNewLocationButton;
         private System.Windows.Forms.TextBox managementLocationNameTextBox;
-        private System.Windows.Forms.ListBox managementRoomTypeListBox;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox managementRoomNameTextBox;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button createNewRoomButton;
         private System.Windows.Forms.Button markRoomAvailableButton;
         private System.Windows.Forms.Button markRoomUnavailableButton;
@@ -571,11 +567,15 @@
         private System.Windows.Forms.TextBox loadReservationFileTextBox;
         private System.Windows.Forms.Button loadReservationFileButton;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox manageHotelState;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox manageHotelCity;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox manageHotelAddressTextBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox roomPriceTextbox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox roomTypeTextbox;
     }
 }

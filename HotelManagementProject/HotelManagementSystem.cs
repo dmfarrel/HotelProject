@@ -200,6 +200,129 @@ namespace HotelManagementProject
             return true;
         }
 
+        public bool AddHotel(Hotel hotel)
+        {
+            Dictionary<int, Hotel> datalist = new Dictionary<int, Hotel>();
+            this.conn.Open();
+            try
+            {
+                SqlCommand addHotel = new SqlCommand("Select *FROM Hotel", this.conn);
+
+                int hotelId = 0;
+                string name = hotel.getName();
+                string address = hotel.getStreetAddress();
+                string city = hotel.getCity();
+                string state = hotel.getState();
+
+                string insertString = $"INSERT INTO Hotel (Name,streetAddress,City,State) " +
+                                      $"VALUES ( '{name}','{address}','{city}','{state}') ";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+                cmd.ExecuteNonQuery();
+            }
+
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
+        public bool AddRoom(Room room)
+        {
+            Dictionary<int, Hotel> datalist = new Dictionary<int, Hotel>();
+            this.conn.Open();
+            try
+            {
+                SqlCommand addHotel = new SqlCommand("Select *FROM Room", this.conn);
+
+                int roomId = room.getId();
+                string type = room.getType();
+                float cost = room.getPrice();
+                int hotelId = room.getHotelId();
+
+                string insertString = $"INSERT INTO Room (HotelId,RoomType,Price, Amenities, Reserved) " +
+                                      $"VALUES ( {hotelId},'{type}',{cost}, '', 0)";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+                cmd.ExecuteNonQuery();
+            }
+
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
+        public bool DeleteRoom(Room room)
+        {
+            Dictionary<int, Hotel> datalist = new Dictionary<int, Hotel>();
+            this.conn.Open();
+            try
+            {
+                SqlCommand deleteRoom = new SqlCommand("Select *FROM Room", this.conn);
+
+                int roomId = room.getId();
+                string type = room.getType();
+                float cost = room.getPrice();
+                int hotelId = room.getHotelId();
+
+                string insertString = $"Delete From Room Where RoomId = {roomId}";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+                cmd.ExecuteNonQuery();
+            }
+
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
+        public bool DeleteHotel(Hotel hotel)
+        {
+            this.conn.Open();
+            try
+            {
+                SqlCommand deleteHotel = new SqlCommand("Select *FROM Hotel", this.conn);
+
+                int hotelId = hotel.getId();
+                string name = hotel.getName();
+                string address = hotel.getStreetAddress();
+                string city = hotel.getCity();
+                string state = hotel.getState();
+
+                string insertString = $"Delete From Hotel Where HotelId = {hotelId}";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+                cmd.ExecuteNonQuery();
+            }
+
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
         // Method to get all reservations that exist within a date range
         public Dictionary<int, Reservation> getReservationDataWithinRange(DateTime startingDate, DateTime endingDate, bool creationDate = false)
         {
