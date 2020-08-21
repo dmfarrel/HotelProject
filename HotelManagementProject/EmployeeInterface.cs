@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 using System.IO;
+using System.Windows.Forms;
 
 namespace HotelManagementProject
 {
@@ -19,13 +12,15 @@ namespace HotelManagementProject
 
         private Dictionary<int, Customer> customers;
         private Dictionary<int, Hotel> hotels;
+        private Dictionary<int, Room> rooms;
+        private Hotel hotel;
+        
 
         private Employee employee;
 
         public EmployeeInterface(Employee employee)
         {
             InitializeComponent();
-
             this.employee = employee;
         }
 
@@ -46,6 +41,7 @@ namespace HotelManagementProject
             foreach (var pair in hotels)    // Add each to the listbox for hotels
             {
                 hotelListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getStreetAddress()}, {pair.Value.getCity()}, {pair.Value.getState()}");
+                managementHotelListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getStreetAddress()}, {pair.Value.getCity()}, {pair.Value.getState()}");
             }
         }
 
@@ -297,6 +293,186 @@ namespace HotelManagementProject
                 this.hms.insertReservation(reservation);
                 this.hms.updateCustomerRewardPoints(customer.getId(), customer.getRewardPoints() - rewardPointsSpent + rewardPointsEarned);
             }
+        }
+
+        private void managementRoomListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int hotelId = managementHotelListBox.SelectedIndex + 1;   // Grad selected hotel
+
+            Dictionary<int, Room> rooms = this.hms.getRoomsByHotelId(hotelId);  // Get all the rooms from that hotel
+
+            roomListBox.Items.Clear();
+            // Clear the current list of items
+
+            // Loop through each room and add it to the listbox
+            foreach (var pair in rooms)
+            {
+                roomListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getType()} - ${pair.Value.getPrice()}");
+            }
+            
+
+        }
+
+        private void createNewRoomButton_Click(object sender, EventArgs e)
+        {
+            hms = new HotelManagementSystem();
+            hotels = new Dictionary<int, Hotel>();
+            Room room;
+
+            string employeeItem = managementHotelListBox.SelectedItem.ToString();
+            int employeeId = Convert.ToInt32(employeeItem.Substring(0, employeeItem.IndexOf(' ')));
+            int HotelId = employeeId;
+            string type = this.roomTypeTextbox.Text;
+            string RoomPrice = roomPriceTextbox.Text;
+            float price = (float)Convert.ToDouble(RoomPrice);
+
+
+            room = new Room(1, HotelId, type, price, null, false);
+            this.hms.AddRoom(room);
+            rooms = hms.getRoomsByHotelId(HotelId);
+
+            managementRoomListBox.Items.Clear();
+            roomListBox.Items.Clear();
+            // Clear the current list of items
+
+            foreach (var pair in rooms)
+            {
+                managementRoomListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getType()} - ${pair.Value.getPrice()}");
+            }
+            managementRoomListBox.Update();
+            roomListBox.Update();
+
+            ExceptionInterface excep = new ExceptionInterface("Successfully created new room");
+            excep.Show();
+
+        }
+
+        private void managementHotelListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            hotels = hms.getHotelData();    // Get a list of all hotels
+            int hotelId = managementHotelListBox.SelectedIndex + 1;   // Grad selected hotel
+
+            Dictionary<int, Room> rooms = this.hms.getRoomsByHotelId(hotelId);  // Get all the rooms from that hotel
+
+            managementRoomListBox.Items.Clear();  // Clear the current list of items
+
+            foreach (var pair in rooms)
+            {
+                managementRoomListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getType()} - ${pair.Value.getPrice()}");
+            }
+            managementRoomListBox.Update();
+
+        }
+
+        private void createNewLocationButton_Click_1(object sender, EventArgs e)
+        {
+            hms = new HotelManagementSystem();
+            hotels = new Dictionary<int, Hotel>();
+            
+            string name = this.managementLocationNameTextBox.Text;
+            string address = this.manageHotelAddressTextBox.Text;
+            string city = this.manageHotelCity.Text;
+            string state = this.manageHotelState.Text;
+
+            Hotel hotel = new Hotel(1, address, city, state, name);
+            this.hms.AddHotel(hotel);
+            hotels = hms.getHotelData();
+
+            managementHotelListBox.Items.Clear();
+            hotelListBox.Items.Clear();
+            // Clear the current list of items
+
+            foreach (var pair in hotels)
+            {
+
+                hotelListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getStreetAddress()}, {pair.Value.getCity()}, {pair.Value.getState()}");
+                managementHotelListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getStreetAddress()}, {pair.Value.getCity()}, {pair.Value.getState()}");
+            }
+            managementHotelListBox.Update();
+            hotelListBox.Update();
+
+
+
+
+            ExceptionInterface excep = new ExceptionInterface("Successfully created new hotel");
+            excep.Show();
+
+        }
+
+        private void removeLocationButton_Click(object sender, EventArgs e)
+        {
+            Hotel hotel;
+            int hotelId;
+
+            string employeeItem = managementHotelListBox.SelectedItem.ToString();
+            int employeeId = Convert.ToInt32(employeeItem.Substring(0, employeeItem.IndexOf(' ')));
+
+            hotelId = employeeId;
+            hotel = new Hotel(hotelId, null, null, null, null);
+            this.hms.DeleteHotel(hotel);
+
+            hotels = hms.getHotelData();
+
+            managementHotelListBox.Items.Clear();
+            hotelListBox.Items.Clear();
+            // Clear the current list of items
+
+            foreach (var pair in hotels)
+            {
+
+                hotelListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getStreetAddress()}, {pair.Value.getCity()}, {pair.Value.getState()}");
+                managementHotelListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getName()} - {pair.Value.getStreetAddress()}, {pair.Value.getCity()}, {pair.Value.getState()}");
+            }
+            managementHotelListBox.Update();
+            hotelListBox.Update();
+
+
+            ExceptionInterface excep = new ExceptionInterface("Successfully deleted hotel");
+            excep.Show();
+
+
+        }
+
+        private void UpdateLocations()
+        {
+            
+        }
+        private void deleteRoomButton_Click(object sender, EventArgs e)
+        {
+            Room room;
+            int roomId;
+
+            string employeeItem = managementRoomListBox.SelectedItem.ToString();
+            int employeeId = Convert.ToInt32(employeeItem.Substring(0, employeeItem.IndexOf(' ')));
+
+            roomId = employeeId;
+            room = new Room(roomId, 0, null, 0, null,false);
+            this.hms.DeleteRoom(room);
+            string employeeItems = managementHotelListBox.SelectedItem.ToString();
+            int employeeIds = Convert.ToInt32(employeeItems.Substring(0, employeeItems.IndexOf(' ')));
+            int HotelId = employeeIds;
+            rooms = hms.getRoomsByHotelId(HotelId);
+
+            managementRoomListBox.Items.Clear();
+            roomListBox.Items.Clear();
+            // Clear the current list of items
+
+            foreach (var pair in rooms)
+            {
+                managementRoomListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getType()} - ${pair.Value.getPrice()}");
+                roomListBox.Items.Add($"{pair.Value.getId()} - {pair.Value.getType()} - ${pair.Value.getPrice()}");
+            }
+            managementRoomListBox.Update();
+            roomListBox.Update();
+
+
+            ExceptionInterface excep = new ExceptionInterface("Successfully deleted room");
+            excep.Show();
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

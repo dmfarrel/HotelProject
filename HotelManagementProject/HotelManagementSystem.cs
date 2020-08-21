@@ -18,6 +18,8 @@ namespace HotelManagementProject
             this.conn = new SqlConnection(this.connectionString);
         }
 
+        
+
         // Inserts a reservation into the database
         public bool insertReservation(Reservation reservation)
         {
@@ -375,7 +377,135 @@ namespace HotelManagementProject
             return dataList;    // Return the list of data
         }
 
-        // Returns a dictionary containing the data for every hotel in the database
+        public bool AddHotel(Hotel hotel)
+        {
+            Dictionary<int, Hotel> datalist = new Dictionary<int, Hotel>();
+            this.conn.Open();
+            try
+            {
+                SqlCommand addHotel = new SqlCommand("Select *FROM Hotel", this.conn);
+
+                int hotelId =  0;
+                string name = hotel.getName();
+                string address = hotel.getStreetAddress();
+                string city = hotel.getCity();
+                string state = hotel.getState();
+
+
+                string insertString = $"INSERT INTO Hotel (Name,streetAddress,City,State) "+
+                                      $"VALUES ( '{name}','{address}','{city}','{state}') ";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+                cmd.ExecuteNonQuery();
+            }
+
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+        
+        public bool AddRoom(Room room)
+        {
+            Dictionary<int, Hotel> datalist = new Dictionary<int, Hotel>();
+            this.conn.Open();
+            try
+            {
+                SqlCommand addHotel = new SqlCommand("Select *FROM Room", this.conn);
+
+                int roomId = room.getId();
+                string type = room.getType();
+                float cost = room.getPrice();
+                int hotelId = room.getHotelId();
+        
+
+
+                string insertString = $"INSERT INTO Room (HotelId,RoomType,Price, Amenities, Reserved) " +
+                                      $"VALUES ( {hotelId},'{type}',{cost}, '', 0)";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+                cmd.ExecuteNonQuery();
+            }
+
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
+        public bool DeleteRoom(Room room)
+        {
+            Dictionary<int, Hotel> datalist = new Dictionary<int, Hotel>();
+            this.conn.Open();
+            try
+            {
+                SqlCommand deleteRoom = new SqlCommand("Select *FROM Room", this.conn);
+
+                int roomId = room.getId();
+                string type = room.getType();
+                float cost = room.getPrice();
+                int hotelId = room.getHotelId();
+
+
+
+                string insertString = $"Delete From Room Where RoomId = {roomId}";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+                cmd.ExecuteNonQuery();
+            }
+
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+
+        public bool DeleteHotel(Hotel hotel)
+        {
+            this.conn.Open();
+            try
+            {
+                SqlCommand deleteHotel = new SqlCommand("Select *FROM Hotel", this.conn);
+
+                int hotelId = hotel.getId();
+                string name = hotel.getName();
+                string address = hotel.getStreetAddress();
+                string city = hotel.getCity();
+                string state = hotel.getState();
+
+
+                string insertString = $"Delete From Hotel Where HotelId = {hotelId}";
+
+                SqlCommand cmd = new SqlCommand(insertString, conn);
+                cmd.ExecuteNonQuery();
+            }
+
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return true;
+        }
+       
         public Dictionary<int, Hotel> getHotelData()
         {
             Dictionary<int, Hotel> dataList = new Dictionary<int, Hotel>();     // Empty list to hold data to return
@@ -419,6 +549,8 @@ namespace HotelManagementProject
 
             return dataList;    // Return the list of data
         }
+
+
 
         public Dictionary<int, Customer> getCustomerData()
         {
@@ -788,12 +920,8 @@ namespace HotelManagementProject
             return count;    // Return the list of data
         }
 
-        public bool createNewHotel(Hotel hotel)
-        {
 
-            return true;
-        }
-
+       
         public string generateSummaryReport(DateTime startingDate, DateTime endingDate)
         {
 
@@ -881,3 +1009,5 @@ namespace HotelManagementProject
         }
     }
 }
+
+
